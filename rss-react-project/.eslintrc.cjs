@@ -13,7 +13,7 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', 'react'],
+  plugins: ['react-refresh', 'react', "react-compiler"],
   parserOptions: {
     ecmaVersion: 'latest',
     ecmaFeatures: {
@@ -36,5 +36,6 @@ module.exports = {
     'import/prefer-default-export': ['off'],
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    'react-compiler/react-compiler': 'error'
   },
 };
