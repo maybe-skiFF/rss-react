@@ -1,0 +1,23 @@
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+
+  width: 300px;
+  height: 250px;
+
+  border: 1px solid black;
+
+  cursor: pointer;
+}
+
+.card-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card-description {
+  font-size: 15px;
+}
