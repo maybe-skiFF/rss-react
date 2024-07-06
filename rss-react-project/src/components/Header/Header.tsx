@@ -1,14 +1,12 @@
 import { Component, ReactNode } from 'react';
 import './Header.scss';
-import { SearchInput } from '../SearchInput/SearchInput';
-import { CustomButton } from '../CustomButton/CustomButton';
+import { Search } from '../Search/Search';
 
 class Header extends Component {
   render(): ReactNode {
     return (
       <div className="header-wrapper">
-        <SearchInput />
-        <CustomButton />
+        <Search />
       </div>
     );
   }
