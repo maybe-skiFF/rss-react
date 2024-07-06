@@ -1,10 +1,24 @@
 import { Component, ReactNode } from 'react';
 import './CustomButton.scss';
 
-class CustomButton extends Component {
+interface IProps {
+  searchInputValue: string;
+}
+class CustomButton extends Component<IProps> {
+  constructor(props: IProps) {
+    super(props);
+  }
+
+  searchButtonHandler = () =>
+    localStorage.setItem('searchInputValue', this.props.searchInputValue);
+
   render(): ReactNode {
     return (
-      <button type="button" className="search-button">
+      <button
+        onClick={this.searchButtonHandler}
+        type="button"
+        className="search-button"
+      >
         Search
       </button>
     );
