@@ -5,6 +5,7 @@ import { Search } from '../Search/Search';
 interface IProps {
   searchInputValue: string;
   setInputValue: (inputValue: string) => void;
+  searchButtonHandler: (searchInputValue: string) => void;
 }
 class Header extends Component<IProps> {
   constructor(props: IProps) {
@@ -16,6 +17,7 @@ class Header extends Component<IProps> {
         <Search
           searchInputValue={this.props.searchInputValue}
           setInputValue={this.props.setInputValue}
+          searchButtonHandler={this.props.searchButtonHandler}
         />
       </div>
     );

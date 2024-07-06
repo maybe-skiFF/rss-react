@@ -5,6 +5,7 @@ import { CustomButton } from '../CustomButton/CustomButton';
 interface IProps {
   searchInputValue: string;
   setInputValue: (inputValue: string) => void;
+  searchButtonHandler: (searchInputValue: string) => void;
 }
 
 class Search extends Component<IProps> {
@@ -26,7 +27,10 @@ class Search extends Component<IProps> {
           className="search-input"
           onChange={this.handleChangeInputValue}
         />
-        <CustomButton searchInputValue={this.props.searchInputValue} />
+        <CustomButton
+          searchInputValue={this.props.searchInputValue}
+          searchButtonHandler={this.props.searchButtonHandler}
+        />
       </div>
     );
   }
