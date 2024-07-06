@@ -8,7 +8,7 @@ class Search extends Component {
   };
 
   handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchInputValue: e.target.value });
+    this.setState({ searchInputValue: e.target.value.trim() });
   };
 
   render(): ReactNode {
