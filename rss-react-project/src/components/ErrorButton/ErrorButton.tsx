@@ -13,8 +13,6 @@ class ErrorButton extends Component {
   render(): ReactNode {
     if (this.state.counter === 1) {
       throw new Error();
-      // console.log(new Error());
-      // console.error(new Error());
     }
     return (
       <button

@@ -8,7 +8,6 @@ class App extends Component {
     return (
       <>
         <ErrorBoundary>
-          <h1>Test</h1>
           <MainPage />
         </ErrorBoundary>
       </>

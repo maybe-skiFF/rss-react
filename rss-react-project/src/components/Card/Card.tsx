@@ -10,6 +10,7 @@ class Card extends Component<ICardData> {
   constructor(props: ICardData) {
     super(props);
   }
+
   render(): ReactNode {
     return (
       <div className={styles.cardWrapper}>

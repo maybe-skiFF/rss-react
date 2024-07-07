@@ -12,6 +12,7 @@ class Header extends Component<IProps> {
   constructor(props: IProps) {
     super(props);
   }
+
   render(): ReactNode {
     return (
       <div className={styles.headerWrapper}>
