@@ -1,11 +1,11 @@
 import { Component, ReactNode } from 'react';
-import styles from './CustomButton.module.scss';
+import styles from './SearchButton.module.scss';
 
 interface IProps {
   searchInputValue: string;
   searchButtonHandler: (searchInputValue: string) => void;
 }
-class CustomButton extends Component<IProps> {
+class SearchButton extends Component<IProps> {
   constructor(props: IProps) {
     super(props);
   }
@@ -28,4 +28,4 @@ class CustomButton extends Component<IProps> {
   }
 }
 
-export { CustomButton };
+export { SearchButton };

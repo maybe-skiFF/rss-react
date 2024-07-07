@@ -1,5 +1,5 @@
 import { ChangeEvent, Component, ReactNode } from 'react';
-import { CustomButton } from '../CustomButton/CustomButton';
+import { SearchButton } from '../SearchButton/SearchButton';
 import styles from './Search.module.scss';
 
 interface IProps {
@@ -27,7 +27,7 @@ class Search extends Component<IProps> {
           className={styles.searchInput}
           onChange={this.handleChangeInputValue}
         />
-        <CustomButton
+        <SearchButton
           searchInputValue={this.props.searchInputValue}
           searchButtonHandler={this.props.searchButtonHandler}
         />
