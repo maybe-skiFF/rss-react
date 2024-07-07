@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import './CustomButton.scss';
+import styles from './CustomButton.module.scss';
 
 interface IProps {
   searchInputValue: string;
@@ -20,7 +20,7 @@ class CustomButton extends Component<IProps> {
       <button
         onClick={this.setSearchInputValueToLocalStorage}
         type="button"
-        className="search-button"
+        className={styles.searchButton}
       >
         Search
       </button>

@@ -1,5 +1,4 @@
 import { Component, ReactNode } from 'react';
-import './MainPage.scss';
 import { Header } from 'src/components/Header/Header';
 import { CardList } from 'src/components/CardList/CardList';
 import { getSearchCards } from 'src/services/api';

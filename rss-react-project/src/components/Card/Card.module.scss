@@ -1,4 +1,4 @@
-.card-wrapper {
+.cardWrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,11 +11,11 @@
   border: 1px solid black;
 }
 
-.card-name {
+.cardName {
   font-size: 20px;
   font-weight: bold;
 }
 
-.card-description {
+.cardDescription {
   font-size: 15px;
 }

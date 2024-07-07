@@ -1,6 +1,6 @@
 import { ChangeEvent, Component, ReactNode } from 'react';
-import './Search.scss';
 import { CustomButton } from '../CustomButton/CustomButton';
+import styles from './Search.module.scss';
 
 interface IProps {
   searchInputValue: string;
@@ -19,12 +19,12 @@ class Search extends Component<IProps> {
 
   render(): ReactNode {
     return (
-      <div className="search-wrapper">
+      <div className={styles.searchWrapper}>
         <input
           value={this.props.searchInputValue}
           type="search"
           placeholder="search..."
-          className="search-input"
+          className={styles.searchInput}
           onChange={this.handleChangeInputValue}
         />
         <CustomButton

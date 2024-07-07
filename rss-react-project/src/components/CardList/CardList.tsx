@@ -1,8 +1,8 @@
 import { Component, ReactNode } from 'react';
-import './CardList.scss';
 import { getCards } from 'src/services/api';
 import { Card } from '../Card/Card';
 import { IPeopleCard } from 'src/interfaces';
+import styles from './CardList.module.scss';
 
 interface IProps {
   cardsData: [] | IPeopleCard[];
@@ -23,7 +23,7 @@ class CardList extends Component<IProps> {
   renderCards() {
     if (this.props.cardsData) {
       return (
-        <div className="card-list-wrapper">
+        <div className={styles.cardListWrapper}>
           {this.props.cardsData.map((cardItem: IPeopleCard) => (
             <Card cardData={cardItem} key={cardItem.name} />
           ))}

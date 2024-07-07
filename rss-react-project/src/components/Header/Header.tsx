@@ -1,6 +1,6 @@
 import { Component, ReactNode } from 'react';
-import './Header.scss';
 import { Search } from '../Search/Search';
+import styles from './Header.module.scss';
 
 interface IProps {
   searchInputValue: string;
@@ -13,7 +13,7 @@ class Header extends Component<IProps> {
   }
   render(): ReactNode {
     return (
-      <div className="header-wrapper">
+      <div className={styles.headerWrapper}>
         <Search
           searchInputValue={this.props.searchInputValue}
           setInputValue={this.props.setInputValue}
