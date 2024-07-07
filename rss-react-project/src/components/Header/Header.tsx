@@ -1,6 +1,7 @@
 import { Component, ReactNode } from 'react';
 import { Search } from '../Search/Search';
 import styles from './Header.module.scss';
+import { ErrorButton } from '../ErrorButton/ErrorButton';
 
 interface IProps {
   searchInputValue: string;
@@ -19,6 +20,7 @@ class Header extends Component<IProps> {
           setInputValue={this.props.setInputValue}
           searchButtonHandler={this.props.searchButtonHandler}
         />
+        <ErrorButton />
       </div>
     );
   }
