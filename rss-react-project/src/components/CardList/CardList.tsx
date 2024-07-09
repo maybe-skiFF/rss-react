@@ -18,7 +18,8 @@ class CardList extends Component<IProps> {
     if (localStorage.getItem('searchInputValue') !== '') {
       getSearchCards(localStorage.getItem('searchInputValue'))
         .then(data => this.props.setCardsData(data.results))
-        .catch(e => console.log(e));
+        .catch(e => console.log(e))
+
     } else {
       getCards()
         .then(data => this.props.setCardsData(data.results))

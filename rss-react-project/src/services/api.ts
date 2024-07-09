@@ -14,7 +14,7 @@ export async function getCards(): Promise<IPeopleCards> {
 }
 
 export async function getSearchCards(
-  searchValue: string,
+  searchValue: string | null,
 ): Promise<IPeopleCards> {
   localStorage.setItem('isLoading', 'true');
   try {
