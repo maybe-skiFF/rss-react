@@ -12,6 +12,11 @@
     "test": "jest --coverage --collectCoverageFrom='src/**/!(main).{ts,tsx}'",
     "prepare": "cd .. && husky rss-react-project/.husky"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "src/*/.{js,jsx,ts,tsx}": [
       "npm run lint -- --fix",
