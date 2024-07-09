@@ -36,6 +36,7 @@ module.exports = {
     'import/prefer-default-export': ['off'],
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': 'off',
-    'react-compiler/react-compiler': 'error'
+    'react-compiler/react-compiler': 'error',
+    '@typescript-eslint/no-explicit-any': 'error',
   },
 };

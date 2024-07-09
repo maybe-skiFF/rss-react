@@ -1,3 +1,4 @@
 cd rss-react-project
 
+npx lint-staged
 npm run lint

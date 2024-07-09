@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import { getCards } from 'src/services/api';
+import { getCards, getSearchCards } from 'src/services/api';
 import { Card } from '../Card/Card';
 import { IPeopleCard } from 'src/interfaces';
 import styles from './CardList.module.scss';
@@ -15,9 +15,15 @@ class CardList extends Component<IProps> {
   }
 
   componentDidMount(): void {
-    getCards()
-      .then(data => this.props.setCardsData(data.results))
-      .catch(e => console.log(e));
+    if (localStorage.getItem('searchInputValue') !== '') {
+      getSearchCards(localStorage.getItem('searchInputValue'))
+        .then(data => this.props.setCardsData(data.results))
+        .catch(e => console.log(e));
+    } else {
+      getCards()
+        .then(data => this.props.setCardsData(data.results))
+        .catch(e => console.log(e));
+    }
   }
 
   renderCards() {
