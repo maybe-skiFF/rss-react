@@ -15,12 +15,13 @@ class CardList extends Component<IProps> {
   }
 
   componentDidMount(): void {
-    if (localStorage.getItem('searchInputValue') !== '') {
-      getSearchCards(localStorage.getItem('searchInputValue'))
+    if (!localStorage.getItem('searchInputValue')) {
+      getCards()
         .then(data => this.props.setCardsData(data.results))
         .catch(e => console.log(e));
-    } else {
-      getCards()
+    }
+    if (localStorage.getItem('searchInputValue') !== '') {
+      getSearchCards(localStorage.getItem('searchInputValue'))
         .then(data => this.props.setCardsData(data.results))
         .catch(e => console.log(e));
     }
