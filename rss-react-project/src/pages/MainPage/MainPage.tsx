@@ -48,6 +48,7 @@ const MainPage = () => {
       <Pagination
         cardsData={cardsData}
         paginationButtonHandler={paginationButtonHandler}
+        searchInputValue={searchInputValue}
       />
     </>
   );
