@@ -6,12 +6,14 @@ interface IProps {
   cardsData: IPeopleCards;
   paginationButtonHandler: (numPage: number) => void;
   searchInputValue: string;
+  setPaginationPageNum: (numPage: number) => void;
 }
 
 const Pagination = ({
   cardsData,
   paginationButtonHandler,
   searchInputValue,
+  setPaginationPageNum,
 }: IProps) => {
   const pageCount = Math.ceil(cardsData.count / 10);
   let pageCountArr;
@@ -29,8 +31,9 @@ const Pagination = ({
     if (searchInputValue === '') {
       navigate(`/page=${pageNum}`);
     } else {
-      navigate(`?search=${searchInputValue}&page=${pageNum}`);
+      navigate(`/page=${pageNum}?search=${searchInputValue}`);
     }
+    setPaginationPageNum(pageNum);
   }
 
   return (

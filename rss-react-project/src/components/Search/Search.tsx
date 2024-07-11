@@ -6,12 +6,14 @@ interface IProps {
   searchInputValue: string;
   setInputValue: (inputValue: string) => void;
   searchButtonHandler: (searchInputValue: string) => void;
+  paginationPageNum: number;
 }
 
 const Search = ({
   searchInputValue,
   setInputValue,
   searchButtonHandler,
+  paginationPageNum,
 }: IProps) => {
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value.trim());
@@ -29,6 +31,7 @@ const Search = ({
       <SearchButton
         searchInputValue={searchInputValue}
         searchButtonHandler={searchButtonHandler}
+        paginationPageNum={paginationPageNum}
       />
     </div>
   );

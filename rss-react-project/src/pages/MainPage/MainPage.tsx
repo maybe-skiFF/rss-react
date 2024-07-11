@@ -11,8 +11,8 @@ const MainPage = () => {
     localStorage.getItem('searchInputValue') ?? '',
   );
   const [cardsData, setCardsData] = useState<IPeopleCards>(Object);
-
   const [isLoading, setIsLoading] = useState<string>('false');
+  const [paginationPageNum, setPaginationPageNum] = useState<number>(1);
 
   function searchInputHandler(value: string) {
     setSearchInputValue(value);
@@ -42,6 +42,7 @@ const MainPage = () => {
         searchInputValue={searchInputValue}
         setInputValue={searchInputHandler}
         searchButtonHandler={searchButtonHandler}
+        paginationPageNum={paginationPageNum}
       />
       {isLoading === 'true' ? <Loader /> : ''}
       <CardList setCardsData={setCardsData} cardsData={cardsData} />
@@ -49,6 +50,7 @@ const MainPage = () => {
         cardsData={cardsData}
         paginationButtonHandler={paginationButtonHandler}
         searchInputValue={searchInputValue}
+        setPaginationPageNum={setPaginationPageNum}
       />
     </>
   );
