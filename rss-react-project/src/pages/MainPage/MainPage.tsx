@@ -1,15 +1,17 @@
 import { Header } from 'src/components/Header/Header';
 import { CardList } from 'src/components/CardList/CardList';
 import { getSearchCards } from 'src/services/api';
-import { IPeopleCard } from 'src/interfaces';
+import { IPeopleCards } from 'src/interfaces';
 import { Loader } from 'src/components/Loader/Loader';
 import { useState } from 'react';
+import { Pagination } from 'src/components/Pagination/Pagination';
 
 const MainPage = () => {
   const [searchInputValue, setSearchInputValue] = useState<string>(
     localStorage.getItem('searchInputValue') ?? '',
   );
-  const [cardsDataState, setCardsData] = useState<[] | IPeopleCard[]>([]);
+  const [cardsData, setCardsData] = useState<IPeopleCards>(Object);
+
   const [isLoading, setIsLoading] = useState<string>('false');
 
   function searchInputHandler(value: string) {
@@ -20,7 +22,7 @@ const MainPage = () => {
     setIsLoading('true');
 
     getSearchCards(searchInputValue)
-      .then(data => setCardsData(data.results))
+      .then(data => setCardsData(data))
       .then(() => setIsLoading('false'))
       .catch(e => console.error(e));
   }
@@ -33,7 +35,8 @@ const MainPage = () => {
         searchButtonHandler={searchButtonHandler}
       />
       {isLoading === 'true' ? <Loader /> : ''}
-      <CardList setCardsData={setCardsData} cardsData={cardsDataState} />
+      <CardList setCardsData={setCardsData} cardsData={cardsData} />
+      <Pagination cardsData={cardsData} />
     </>
   );
 };

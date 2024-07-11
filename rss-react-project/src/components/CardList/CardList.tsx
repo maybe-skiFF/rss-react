@@ -1,33 +1,33 @@
 import { getCards, getSearchCards } from 'src/services/api';
 import { Card } from '../Card/Card';
-import { IPeopleCard } from 'src/interfaces';
+import { IPeopleCard, IPeopleCards } from 'src/interfaces';
 import styles from './CardList.module.scss';
 import { useEffect } from 'react';
 
 interface IProps {
-  cardsData: [] | IPeopleCard[];
-  setCardsData: (cards: [] | IPeopleCard[]) => void;
+  cardsData: IPeopleCards;
+  setCardsData: (cards: IPeopleCards) => void;
 }
 
 const CardList = ({ cardsData, setCardsData }: IProps) => {
   useEffect(() => {
     if (!localStorage.getItem('searchInputValue')) {
       getCards()
-        .then(data => setCardsData(data.results))
+        .then(data => setCardsData(data))
         .catch(e => console.error(e));
     }
     if (localStorage.getItem('searchInputValue') !== '') {
       getSearchCards(localStorage.getItem('searchInputValue'))
-        .then(data => setCardsData(data.results))
+        .then(data => setCardsData(data))
         .catch(e => console.error(e));
     }
   }, [setCardsData]);
 
   function renderCards() {
-    if (cardsData) {
+    if (cardsData.results) {
       return (
         <div className={styles.cardListWrapper}>
-          {cardsData.map((cardItem: IPeopleCard) => (
+          {cardsData.results.map((cardItem: IPeopleCard) => (
             <Card cardData={cardItem} key={cardItem.name} />
           ))}
         </div>

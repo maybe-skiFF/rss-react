@@ -1,0 +1,20 @@
+.paginationWrapper {
+  display: flex;
+  column-gap: 10px;
+  justify-content: center;
+}
+
+.paginationItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  list-style: none;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
