@@ -1,0 +1,21 @@
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+
+  width: 300px;
+  height: 250px;
+
+  border: 1px solid black;
+}
+
+.cardName {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cardDescription {
+  font-size: 15px;
+}
