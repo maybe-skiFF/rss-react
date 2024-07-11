@@ -1,29 +1,25 @@
-import { Component, ReactNode } from 'react';
+import { useState } from 'react';
 import styles from './ErrorButton.module.scss';
 
-class ErrorButton extends Component {
-  state = {
-    counter: 0,
-  };
+const ErrorButton = () => {
+  const [counter, setCounter] = useState<number>(0);
 
-  handleClick() {
-    this.setState({ counter: 1 });
+  function handleClick() {
+    setCounter(1);
   }
 
-  render(): ReactNode {
-    if (this.state.counter === 1) {
-      throw new Error();
-    }
-    return (
-      <button
-        className={styles.errorButton}
-        type="button"
-        onClick={() => this.handleClick()}
-      >
-        Error
-      </button>
-    );
+  if (counter === 1) {
+    throw new Error();
   }
-}
+  return (
+    <button
+      className={styles.errorButton}
+      type="button"
+      onClick={() => handleClick()}
+    >
+      Error
+    </button>
+  );
+};
 
 export { ErrorButton };
