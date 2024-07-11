@@ -27,6 +27,15 @@ const MainPage = () => {
       .catch(e => console.error(e));
   }
 
+  function paginationButtonHandler(numPage: number) {
+    setIsLoading('true');
+
+    getSearchCards(searchInputValue, numPage)
+      .then(data => setCardsData(data))
+      .then(() => setIsLoading('false'))
+      .catch(e => console.error(e));
+  }
+
   return (
     <>
       <Header
@@ -36,7 +45,10 @@ const MainPage = () => {
       />
       {isLoading === 'true' ? <Loader /> : ''}
       <CardList setCardsData={setCardsData} cardsData={cardsData} />
-      <Pagination cardsData={cardsData} />
+      <Pagination
+        cardsData={cardsData}
+        paginationButtonHandler={paginationButtonHandler}
+      />
     </>
   );
 };

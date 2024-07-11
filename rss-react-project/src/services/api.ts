@@ -15,10 +15,13 @@ export async function getCards(): Promise<IPeopleCards> {
 
 export async function getSearchCards(
   searchValue: string | null,
+  pageNum = 1,
 ): Promise<IPeopleCards> {
   localStorage.setItem('isLoading', 'true');
   try {
-    const resp = await fetch(`${BASE_URL}/?search=${searchValue}`);
+    const resp = await fetch(
+      `${BASE_URL}/?search=${searchValue}&page=${pageNum}`,
+    );
     localStorage.setItem('isLoading', 'false');
 
     return (await resp.json()) as IPeopleCards;

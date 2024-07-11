@@ -3,9 +3,10 @@ import styles from './Pagination.module.scss';
 
 interface IProps {
   cardsData: IPeopleCards;
+  paginationButtonHandler: (numPage: number) => void;
 }
 
-const Pagination = ({ cardsData }: IProps) => {
+const Pagination = ({ cardsData, paginationButtonHandler }: IProps) => {
   const pageCount = Math.ceil(cardsData.count / 10);
   let pageCountArr;
 
@@ -17,18 +18,14 @@ const Pagination = ({ cardsData }: IProps) => {
     return pageCountArr;
   })(pageCount);
 
-  console.log(pageCountArr);
-  // return (
-  //   <ul className={styles.paginationWrapper}>
-  //     <li className={styles.paginationItem}>1</li>
-  //     <li className={styles.paginationItem}>2</li>
-  //   </ul>
-  // );
-
   return (
     <ul className={styles.paginationWrapper}>
       {pageCountArr.map(pageNum => (
-        <li key={pageNum} className={styles.paginationItem}>
+        <li
+          onClick={() => paginationButtonHandler(pageNum)}
+          key={pageNum}
+          className={styles.paginationItem}
+        >
           {pageNum}
         </li>
       ))}
