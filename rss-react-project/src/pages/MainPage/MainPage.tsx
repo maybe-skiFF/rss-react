@@ -1,49 +1,45 @@
-import { Component, ReactNode } from 'react';
 import { Header } from 'src/components/Header/Header';
 import { CardList } from 'src/components/CardList/CardList';
 import { getSearchCards } from 'src/services/api';
 import { IPeopleCard } from 'src/interfaces';
 import { Loader } from 'src/components/Loader/Loader';
+import { useState } from 'react';
 
-class MainPage extends Component {
-  state = {
-    searchInputValue: localStorage.getItem('searchInputValue') ?? '',
-    cardsData: [],
-    isLoading: 'false',
-  };
+const MainPage = () => {
+  const [searchInputValue, setSearchInputValue] = useState<string>(
+    localStorage.getItem('searchInputValue') ?? '',
+  );
+  const [cardsDataState, setCardsData] = useState<[] | IPeopleCard[]>([]);
+  const [isLoading, setIsLoading] = useState<string>('false');
 
-  searchInputHandler(value: string) {
-    this.setState({ searchInputValue: value });
+  function searchInputHandler(value: string) {
+    setSearchInputValue(value);
   }
 
-  setCardsData(cards: [] | IPeopleCard[]) {
-    this.setState({ cardsData: cards });
-  }
+  // function setCardsData(cards: [] | IPeopleCard[]) {
+  //   setCardsDataState(cards);
+  // }
 
-  searchButtonHandler(searchInputValue: string) {
-    this.setState({ isLoading: 'true' });
+  function searchButtonHandler(searchInputValue: string) {
+    setIsLoading('true');
+
     getSearchCards(searchInputValue)
-      .then(data => this.setState({ cardsData: data.results }))
-      .then(() => this.setState({ isLoading: 'false' }))
-      .catch(e => console.log(e));
+      .then(data => setCardsData(data.results))
+      .then(() => setIsLoading('false'))
+      .catch(e => console.error(e));
   }
 
-  render(): ReactNode {
-    return (
-      <>
-        <Header
-          searchInputValue={this.state.searchInputValue}
-          setInputValue={this.searchInputHandler.bind(this)}
-          searchButtonHandler={this.searchButtonHandler.bind(this)}
-        />
-        {this.state.isLoading === 'true' ? <Loader /> : ''}
-        <CardList
-          setCardsData={this.setCardsData.bind(this)}
-          cardsData={this.state.cardsData}
-        />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Header
+        searchInputValue={searchInputValue}
+        setInputValue={searchInputHandler}
+        searchButtonHandler={searchButtonHandler}
+      />
+      {isLoading === 'true' ? <Loader /> : ''}
+      <CardList setCardsData={setCardsData} cardsData={cardsDataState} />
+    </>
+  );
+};
 
 export { MainPage };

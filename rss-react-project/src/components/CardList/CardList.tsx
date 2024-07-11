@@ -1,37 +1,33 @@
-import { Component, ReactNode } from 'react';
 import { getCards, getSearchCards } from 'src/services/api';
 import { Card } from '../Card/Card';
 import { IPeopleCard } from 'src/interfaces';
 import styles from './CardList.module.scss';
+import { useEffect } from 'react';
 
 interface IProps {
   cardsData: [] | IPeopleCard[];
   setCardsData: (cards: [] | IPeopleCard[]) => void;
 }
 
-class CardList extends Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
-  componentDidMount(): void {
+const CardList = ({ cardsData, setCardsData }: IProps) => {
+  useEffect(() => {
     if (!localStorage.getItem('searchInputValue')) {
       getCards()
-        .then(data => this.props.setCardsData(data.results))
-        .catch(e => console.log(e));
+        .then(data => setCardsData(data.results))
+        .catch(e => console.error(e));
     }
     if (localStorage.getItem('searchInputValue') !== '') {
       getSearchCards(localStorage.getItem('searchInputValue'))
-        .then(data => this.props.setCardsData(data.results))
-        .catch(e => console.log(e));
+        .then(data => setCardsData(data.results))
+        .catch(e => console.error(e));
     }
-  }
+  }, [setCardsData]);
 
-  renderCards() {
-    if (this.props.cardsData) {
+  function renderCards() {
+    if (cardsData) {
       return (
         <div className={styles.cardListWrapper}>
-          {this.props.cardsData.map((cardItem: IPeopleCard) => (
+          {cardsData.map((cardItem: IPeopleCard) => (
             <Card cardData={cardItem} key={cardItem.name} />
           ))}
         </div>
@@ -39,9 +35,7 @@ class CardList extends Component<IProps> {
     }
   }
 
-  render(): ReactNode {
-    return this.renderCards();
-  }
-}
+  return renderCards();
+};
 
 export { CardList };
