@@ -16,10 +16,6 @@ const MainPage = () => {
     setSearchInputValue(value);
   }
 
-  // function setCardsData(cards: [] | IPeopleCard[]) {
-  //   setCardsDataState(cards);
-  // }
-
   function searchButtonHandler(searchInputValue: string) {
     setIsLoading('true');
 
