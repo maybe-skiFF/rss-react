@@ -14,7 +14,7 @@ const SearchButton = ({
 }: IProps) => {
   const navigate = useNavigate();
 
-  function updateURL(paginationPageNum: number) {
+  function searchButtonUpdateURL(paginationPageNum: number) {
     if (searchInputValue !== '') {
       navigate(`/page=${1 || paginationPageNum}?search=${searchInputValue}`);
     } else {
@@ -25,7 +25,7 @@ const SearchButton = ({
   const setSearchInputValueToLocalStorage = () => {
     localStorage.setItem('searchInputValue', searchInputValue);
     searchButtonHandler(searchInputValue);
-    updateURL(paginationPageNum);
+    searchButtonUpdateURL(paginationPageNum);
   };
 
   return (

@@ -27,7 +27,7 @@ const Pagination = ({
     return pageCountArr;
   })(pageCount);
 
-  function updateURL(pageNum: number) {
+  function paginationUpdateURL(pageNum: number) {
     if (searchInputValue === '') {
       navigate(`/page=${pageNum}`);
     } else {
@@ -42,7 +42,7 @@ const Pagination = ({
         <li
           onClick={() => {
             paginationButtonHandler(pageNum);
-            updateURL(pageNum);
+            paginationUpdateURL(pageNum);
           }}
           key={pageNum}
           className={styles.paginationItem}
