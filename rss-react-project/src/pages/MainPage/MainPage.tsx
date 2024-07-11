@@ -5,6 +5,7 @@ import { IPeopleCards } from 'src/interfaces';
 import { Loader } from 'src/components/Loader/Loader';
 import { useState } from 'react';
 import { Pagination } from 'src/components/Pagination/Pagination';
+import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 
 const MainPage = () => {
   const [searchInputValue, setSearchInputValue] = useState<string>(
@@ -37,7 +38,7 @@ const MainPage = () => {
   }
 
   return (
-    <>
+    <ErrorBoundary>
       <Header
         searchInputValue={searchInputValue}
         setInputValue={searchInputHandler}
@@ -52,7 +53,7 @@ const MainPage = () => {
         searchInputValue={searchInputValue}
         setPaginationPageNum={setPaginationPageNum}
       />
-    </>
+    </ErrorBoundary>
   );
 };
 
