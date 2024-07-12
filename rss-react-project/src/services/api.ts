@@ -1,10 +1,10 @@
 import { IPeopleCards } from 'src/interfaces';
 import { BASE_URL } from 'src/variables';
 
-export async function getCards(): Promise<IPeopleCards> {
+export async function getCards(pageNum = 1): Promise<IPeopleCards> {
   localStorage.setItem('isLoading', 'true');
   try {
-    const resp = await fetch(`${BASE_URL}`);
+    const resp = await fetch(`${BASE_URL}/?page${pageNum}`);
     localStorage.setItem('isLoading', 'false');
 
     return (await resp.json()) as IPeopleCards;

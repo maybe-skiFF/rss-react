@@ -29,9 +29,9 @@ const Pagination = ({
 
   function paginationUpdateURL(pageNum: number) {
     if (searchInputValue === '') {
-      navigate(`/page=${pageNum}`);
+      navigate(`people?page=${pageNum}`);
     } else {
-      navigate(`/page=${pageNum}?search=${searchInputValue}`);
+      navigate(`people?page=${pageNum}&search=${searchInputValue}`);
     }
     setPaginationPageNum(pageNum);
   }

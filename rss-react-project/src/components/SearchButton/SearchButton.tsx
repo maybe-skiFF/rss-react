@@ -16,9 +16,11 @@ const SearchButton = ({
 
   function searchButtonUpdateURL(paginationPageNum: number) {
     if (searchInputValue !== '') {
-      navigate(`/page=${1 || paginationPageNum}?search=${searchInputValue}`);
+      navigate(
+        `people?page=${1 || paginationPageNum}&search=${searchInputValue}`,
+      );
     } else {
-      navigate(`/page=${1}`);
+      navigate(`people?page=${1}`);
     }
   }
 
