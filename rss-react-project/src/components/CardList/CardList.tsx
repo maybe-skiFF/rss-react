@@ -8,9 +8,18 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 interface IProps {
   cardsData: IPeopleCards;
   setCardsData: (cards: IPeopleCards) => void;
+  getDetailedCardData: (personName: string) => void;
+  isOpenDetailCard: boolean;
+  setIsOpenDetailCard: (isOpen: boolean) => void;
 }
 
-const CardList = ({ cardsData, setCardsData }: IProps) => {
+const CardList = ({
+  cardsData,
+  setCardsData,
+  getDetailedCardData,
+  isOpenDetailCard,
+  setIsOpenDetailCard,
+}: IProps) => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const curPage = searchParams.get('page') ?? '1';
@@ -37,12 +46,24 @@ const CardList = ({ cardsData, setCardsData }: IProps) => {
     }
   }, [setCardsData, curPage, curSearchTerm, cardsData.detail, navigate]);
 
+  function closeDetailedCard() {
+    if (isOpenDetailCard) setIsOpenDetailCard(false);
+    else return;
+  }
+
   function renderCards() {
     if (cardsData.results && cardsData.count !== 0) {
       return (
-        <div className={styles.cardListWrapper}>
+        <div
+          className={styles.cardListWrapper}
+          onClick={() => closeDetailedCard()}
+        >
           {cardsData.results.map((cardItem: IPeopleCard) => (
-            <Card cardData={cardItem} key={cardItem.name} />
+            <Card
+              cardData={cardItem}
+              key={cardItem.name}
+              getDetailedCardData={getDetailedCardData}
+            />
           ))}
         </div>
       );

@@ -6,6 +6,8 @@ import { Loader } from 'src/components/Loader/Loader';
 import { useState } from 'react';
 import { Pagination } from 'src/components/Pagination/Pagination';
 import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
+import styles from './MainPage.module.scss';
+import { DetaildCard } from 'src/components/DetaildCard/DetaildCard';
 
 const MainPage = () => {
   const [searchInputValue, setSearchInputValue] = useState<string>(
@@ -14,6 +16,8 @@ const MainPage = () => {
   const [cardsData, setCardsData] = useState<IPeopleCards>(Object);
   const [isLoading, setIsLoading] = useState<string>('false');
   const [paginationPageNum, setPaginationPageNum] = useState<number>(1);
+  const [personData, setPersonData] = useState<IPeopleCards>(Object);
+  const [isOpenDetailCard, setIsOpenDetailCard] = useState<boolean>(false);
 
   function searchInputHandler(value: string) {
     setSearchInputValue(value);
@@ -37,6 +41,16 @@ const MainPage = () => {
       .catch(e => console.error(e));
   }
 
+  function getDetailedCardData(personName: string) {
+    setIsLoading('true');
+    setIsOpenDetailCard(true);
+
+    getSearchCards(personName)
+      .then(data => setPersonData(data))
+      .then(() => setIsLoading('false'))
+      .catch(e => console.error(e));
+  }
+
   return (
     <ErrorBoundary>
       <Header
@@ -46,7 +60,23 @@ const MainPage = () => {
         paginationPageNum={paginationPageNum}
       />
       {isLoading === 'true' ? <Loader /> : ''}
-      <CardList setCardsData={setCardsData} cardsData={cardsData} />
+      <div className={styles.outletWrapper}>
+        <CardList
+          setCardsData={setCardsData}
+          cardsData={cardsData}
+          getDetailedCardData={getDetailedCardData}
+          isOpenDetailCard={isOpenDetailCard}
+          setIsOpenDetailCard={setIsOpenDetailCard}
+        />
+        {personData.count && isOpenDetailCard ? (
+          <DetaildCard
+            personData={personData}
+            setIsOpenDetailCard={setIsOpenDetailCard}
+          />
+        ) : (
+          ''
+        )}
+      </div>
       <Pagination
         cardsData={cardsData}
         paginationButtonHandler={paginationButtonHandler}
