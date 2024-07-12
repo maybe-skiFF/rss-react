@@ -47,8 +47,10 @@ const CardList = ({
   }, [setCardsData, curPage, curSearchTerm, cardsData.detail, navigate]);
 
   function closeDetailedCard() {
-    if (isOpenDetailCard) setIsOpenDetailCard(false);
-    else return;
+    if (isOpenDetailCard) {
+      setIsOpenDetailCard(false);
+      navigate('people/');
+    } else return;
   }
 
   function renderCards() {

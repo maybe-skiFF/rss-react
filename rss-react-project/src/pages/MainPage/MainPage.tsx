@@ -8,6 +8,7 @@ import { Pagination } from 'src/components/Pagination/Pagination';
 import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 import styles from './MainPage.module.scss';
 import { DetaildCard } from 'src/components/DetaildCard/DetaildCard';
+import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
   const [searchInputValue, setSearchInputValue] = useState<string>(
@@ -18,6 +19,8 @@ const MainPage = () => {
   const [paginationPageNum, setPaginationPageNum] = useState<number>(1);
   const [personData, setPersonData] = useState<IPeopleCards>(Object);
   const [isOpenDetailCard, setIsOpenDetailCard] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   function searchInputHandler(value: string) {
     setSearchInputValue(value);
@@ -44,6 +47,7 @@ const MainPage = () => {
   function getDetailedCardData(personName: string) {
     setIsLoading('true');
     setIsOpenDetailCard(true);
+    navigate(`people/detailed:${personName.trim()}`);
 
     getSearchCards(personName)
       .then(data => setPersonData(data))

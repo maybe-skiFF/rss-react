@@ -1,5 +1,6 @@
 import { IPeopleCards } from 'src/interfaces';
 import styles from './DetaildCard.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
   personData: IPeopleCards;
@@ -7,13 +8,17 @@ interface IProps {
 }
 
 const DetaildCard = ({ personData, setIsOpenDetailCard }: IProps) => {
+  const navigate = useNavigate();
   const { name, birth_year, mass, height, skin_color, eye_color } =
     personData.results[0];
 
   return (
     <div className={styles.detailedCardWrapper}>
       <button
-        onClick={() => setIsOpenDetailCard(false)}
+        onClick={() => {
+          setIsOpenDetailCard(false);
+          navigate('people/');
+        }}
         type="button"
         className={styles.detailedCardCloseBtn}
       >
