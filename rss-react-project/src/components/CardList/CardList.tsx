@@ -3,7 +3,7 @@ import { Card } from '../Card/Card';
 import { IPeopleCard, IPeopleCards } from 'src/interfaces';
 import styles from './CardList.module.scss';
 import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface IProps {
   cardsData: IPeopleCards;
@@ -12,6 +12,7 @@ interface IProps {
 
 const CardList = ({ cardsData, setCardsData }: IProps) => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const curPage = searchParams.get('page') ?? '1';
   const curSearchTerm = searchParams.get('search') ?? '';
 
@@ -31,7 +32,10 @@ const CardList = ({ cardsData, setCardsData }: IProps) => {
     if (localStorage.getItem('searchInputValue') !== '') {
       getCardsFromApi();
     }
-  }, [setCardsData, curPage, curSearchTerm]);
+    if (cardsData.detail) {
+      navigate('*');
+    }
+  }, [setCardsData, curPage, curSearchTerm, cardsData.detail, navigate]);
 
   function renderCards() {
     if (cardsData.results && cardsData.count !== 0) {
