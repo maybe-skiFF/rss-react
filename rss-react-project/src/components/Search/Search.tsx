@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, ReactNode } from 'react';
+import { ChangeEvent } from 'react';
 import { SearchButton } from '../SearchButton/SearchButton';
 import styles from './Search.module.scss';
 
@@ -6,34 +6,35 @@ interface IProps {
   searchInputValue: string;
   setInputValue: (inputValue: string) => void;
   searchButtonHandler: (searchInputValue: string) => void;
+  paginationPageNum: number;
 }
 
-class Search extends Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
-  handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-    this.props.setInputValue(e.target.value.trim());
+const Search = ({
+  searchInputValue,
+  setInputValue,
+  searchButtonHandler,
+  paginationPageNum,
+}: IProps) => {
+  const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value.trim());
   };
 
-  render(): ReactNode {
-    return (
-      <div className={styles.searchWrapper}>
-        <input
-          value={this.props.searchInputValue}
-          type="search"
-          placeholder="search..."
-          className={styles.searchInput}
-          onChange={this.handleChangeInputValue}
-        />
-        <SearchButton
-          searchInputValue={this.props.searchInputValue}
-          searchButtonHandler={this.props.searchButtonHandler}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className={styles.searchWrapper}>
+      <input
+        value={searchInputValue}
+        type="search"
+        placeholder="search..."
+        className={styles.searchInput}
+        onChange={handleChangeInputValue}
+      />
+      <SearchButton
+        searchInputValue={searchInputValue}
+        searchButtonHandler={searchButtonHandler}
+        paginationPageNum={paginationPageNum}
+      />
+    </div>
+  );
+};
 
 export { Search };

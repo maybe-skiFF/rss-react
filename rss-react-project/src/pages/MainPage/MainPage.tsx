@@ -1,49 +1,93 @@
-import { Component, ReactNode } from 'react';
 import { Header } from 'src/components/Header/Header';
 import { CardList } from 'src/components/CardList/CardList';
 import { getSearchCards } from 'src/services/api';
-import { IPeopleCard } from 'src/interfaces';
+import { IPeopleCards } from 'src/interfaces';
 import { Loader } from 'src/components/Loader/Loader';
+import { useState } from 'react';
+import { Pagination } from 'src/components/Pagination/Pagination';
+import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
+import styles from './MainPage.module.scss';
+import { DetaildCard } from 'src/components/DetaildCard/DetaildCard';
+import { useNavigate } from 'react-router-dom';
+import { useSearchValue } from 'src/hooks/useSearchValue';
 
-class MainPage extends Component {
-  state = {
-    searchInputValue: localStorage.getItem('searchInputValue') ?? '',
-    cardsData: [],
-    isLoading: 'false',
-  };
+const MainPage = () => {
+  const [searchInputValue, setSearchInputValue] = useSearchValue();
+  const [cardsData, setCardsData] = useState<IPeopleCards>(Object);
+  const [isLoading, setIsLoading] = useState<string>('false');
+  const [paginationPageNum, setPaginationPageNum] = useState<number>(1);
+  const [personData, setPersonData] = useState<IPeopleCards>(Object);
+  const [isOpenDetailCard, setIsOpenDetailCard] = useState<boolean>(false);
 
-  searchInputHandler(value: string) {
-    this.setState({ searchInputValue: value });
+  const navigate = useNavigate();
+
+  function searchInputHandler(value: string) {
+    setSearchInputValue(value);
   }
 
-  setCardsData(cards: [] | IPeopleCard[]) {
-    this.setState({ cardsData: cards });
-  }
+  function searchButtonHandler(searchInputValue: string) {
+    setIsLoading('true');
 
-  searchButtonHandler(searchInputValue: string) {
-    this.setState({ isLoading: 'true' });
     getSearchCards(searchInputValue)
-      .then(data => this.setState({ cardsData: data.results }))
-      .then(() => this.setState({ isLoading: 'false' }))
-      .catch(e => console.log(e));
+      .then(data => setCardsData(data))
+      .then(() => setIsLoading('false'))
+      .catch(e => console.error(e));
   }
 
-  render(): ReactNode {
-    return (
-      <>
-        <Header
-          searchInputValue={this.state.searchInputValue}
-          setInputValue={this.searchInputHandler.bind(this)}
-          searchButtonHandler={this.searchButtonHandler.bind(this)}
-        />
-        {this.state.isLoading === 'true' ? <Loader /> : ''}
-        <CardList
-          setCardsData={this.setCardsData.bind(this)}
-          cardsData={this.state.cardsData}
-        />
-      </>
-    );
+  function paginationButtonHandler(numPage: number) {
+    setIsLoading('true');
+
+    getSearchCards(searchInputValue, numPage)
+      .then(data => setCardsData(data))
+      .then(() => setIsLoading('false'))
+      .catch(e => console.error(e));
   }
-}
+
+  function getDetailedCardData(personName: string) {
+    setIsLoading('true');
+    setIsOpenDetailCard(true);
+    navigate(`people/detailed:${personName.trim()}`);
+
+    getSearchCards(personName)
+      .then(data => setPersonData(data))
+      .then(() => setIsLoading('false'))
+      .catch(e => console.error(e));
+  }
+
+  return (
+    <ErrorBoundary>
+      <Header
+        searchInputValue={searchInputValue}
+        setInputValue={searchInputHandler}
+        searchButtonHandler={searchButtonHandler}
+        paginationPageNum={paginationPageNum}
+      />
+      {isLoading === 'true' ? <Loader /> : ''}
+      <div className={styles.outletWrapper}>
+        <CardList
+          setCardsData={setCardsData}
+          cardsData={cardsData}
+          getDetailedCardData={getDetailedCardData}
+          isOpenDetailCard={isOpenDetailCard}
+          setIsOpenDetailCard={setIsOpenDetailCard}
+        />
+        {personData.count && isOpenDetailCard ? (
+          <DetaildCard
+            personData={personData}
+            setIsOpenDetailCard={setIsOpenDetailCard}
+          />
+        ) : (
+          ''
+        )}
+      </div>
+      <Pagination
+        cardsData={cardsData}
+        paginationButtonHandler={paginationButtonHandler}
+        searchInputValue={searchInputValue}
+        setPaginationPageNum={setPaginationPageNum}
+      />
+    </ErrorBoundary>
+  );
+};
 
 export { MainPage };

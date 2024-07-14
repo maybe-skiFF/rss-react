@@ -22,4 +22,5 @@ export interface IPeopleCards {
   next: string | null;
   previous: string | null;
   results: IPeopleCard[];
+  detail?: string;
 }
