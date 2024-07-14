@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1720969781776" clover="3.2.0">
+  <project timestamp="1720969781777" name="All files">
+    <metrics statements="7" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1" elements="9" coveredelements="6" complexity="0" loc="7" ncloc="7" packages="1" files="1" classes="1"/>
+    <file name="Card.tsx" path="D:\rs-school-react\rss-react\rss-react-project\src\components\Card\Card.tsx">
+      <metrics statements="7" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="10" count="1" type="stmt"/>
+      <line num="12" count="1" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+      <line num="16" count="0" type="stmt"/>
+      <line num="37" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
