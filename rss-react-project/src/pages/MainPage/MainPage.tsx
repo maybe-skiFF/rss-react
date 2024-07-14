@@ -9,11 +9,10 @@ import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 import styles from './MainPage.module.scss';
 import { DetaildCard } from 'src/components/DetaildCard/DetaildCard';
 import { useNavigate } from 'react-router-dom';
+import { useSearchValue } from 'src/hooks/useSearchValue';
 
 const MainPage = () => {
-  const [searchInputValue, setSearchInputValue] = useState<string>(
-    localStorage.getItem('searchInputValue') ?? '',
-  );
+  const [searchInputValue, setSearchInputValue] = useSearchValue();
   const [cardsData, setCardsData] = useState<IPeopleCards>(Object);
   const [isLoading, setIsLoading] = useState<string>('false');
   const [paginationPageNum, setPaginationPageNum] = useState<number>(1);
