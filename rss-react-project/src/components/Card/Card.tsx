@@ -11,6 +11,7 @@ const Card = ({ cardData, getDetailedCardData }: ICardData) => {
 
   return (
     <div
+      data-testid={name}
       onClick={e => {
         const target = e.target as HTMLDivElement;
         getDetailedCardData(target.id);
