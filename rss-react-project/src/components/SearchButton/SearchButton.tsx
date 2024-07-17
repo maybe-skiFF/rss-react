@@ -32,6 +32,7 @@ const SearchButton = ({
 
   return (
     <button
+      data-testid="searchButton"
       onClick={setSearchInputValueToLocalStorage}
       type="button"
       className={styles.searchButton}
