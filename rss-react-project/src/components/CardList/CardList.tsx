@@ -1,4 +1,4 @@
-import { getSearchCards } from 'src/services/api';
+import { getSearchCards } from '../../services/api';
 import { Card } from '../Card/Card';
 import { IPeopleCard, IPeopleCards } from 'src/interfaces';
 import styles from './CardList.module.scss';
@@ -57,6 +57,7 @@ const CardList = ({
     if (cardsData.results && cardsData.count !== 0) {
       return (
         <div
+          data-testid="cardList"
           className={styles.cardListWrapper}
           onClick={() => closeDetailedCard()}
         >

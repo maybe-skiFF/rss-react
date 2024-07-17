@@ -1,15 +1,15 @@
-import { Header } from 'src/components/Header/Header';
-import { CardList } from 'src/components/CardList/CardList';
-import { getSearchCards } from 'src/services/api';
 import { IPeopleCards } from 'src/interfaces';
-import { Loader } from 'src/components/Loader/Loader';
 import { useState } from 'react';
-import { Pagination } from 'src/components/Pagination/Pagination';
-import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 import styles from './MainPage.module.scss';
-import { DetaildCard } from 'src/components/DetaildCard/DetaildCard';
 import { useNavigate } from 'react-router-dom';
-import { useSearchValue } from 'src/hooks/useSearchValue';
+import { Header } from '../../components/Header/Header';
+import { useSearchValue } from '../../hooks/useSearchValue';
+import { CardList } from '../../components/CardList/CardList';
+import { Loader } from '../../components/Loader/Loader';
+import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
+import { Pagination } from '../../components/Pagination/Pagination';
+import { DetaildCard } from '../../components/DetaildCard/DetaildCard';
+import { getSearchCards } from '../../services/api';
 
 const MainPage = () => {
   const [searchInputValue, setSearchInputValue] = useSearchValue();

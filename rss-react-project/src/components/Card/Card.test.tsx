@@ -21,21 +21,23 @@ const mockData = {
   url: '',
 };
 
-test('the card component renders the relevant card data', () => {
-  render(
-    <Card cardData={mockData} getDetailedCardData={() => mockData.name} />,
-  );
-  expect(screen.getByText('Character: C-3PO')).toBeInTheDocument();
-});
-
-test('validate that clicking on a card opens a detailed card component', () => {
-  const getDetailedCardData = jest.fn().mockImplementation(() => {
-    window.history.pushState({}, '', '/people/detailed:C-3PO');
+describe('Card tests', () => {
+  test('the card component renders the relevant card data', () => {
+    render(
+      <Card cardData={mockData} getDetailedCardData={() => mockData.name} />,
+    );
+    expect(screen.getByText('Character: C-3PO')).toBeInTheDocument();
   });
-  render(
-    <Card cardData={mockData} getDetailedCardData={getDetailedCardData} />,
-  );
-  const card = screen.getByTestId(mockData.name);
-  fireEvent.click(card);
-  expect(window.location.pathname).toBe('/people/detailed:C-3PO');
+
+  test('validate that clicking on a card opens a detailed card component', () => {
+    const getDetailedCardData = jest.fn().mockImplementation(() => {
+      window.history.pushState({}, '', '/people/detailed:C-3PO');
+    });
+    render(
+      <Card cardData={mockData} getDetailedCardData={getDetailedCardData} />,
+    );
+    const card = screen.getByTestId(mockData.name);
+    fireEvent.click(card);
+    expect(window.location.pathname).toBe('/people/detailed:C-3PO');
+  });
 });

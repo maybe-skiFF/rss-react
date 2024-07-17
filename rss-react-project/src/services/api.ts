@@ -1,5 +1,5 @@
 import { IPeopleCards } from 'src/interfaces';
-import { BASE_URL } from 'src/variables';
+import { BASE_URL } from '../variables/index';
 
 export async function getCards(pageNum = 1): Promise<IPeopleCards> {
   localStorage.setItem('isLoading', 'true');
