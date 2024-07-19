@@ -59,6 +59,7 @@
     "eslint-plugin-react-compiler": "^0.0.0-experimental-0998c1e-20240625",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "fetch-mock-jest": "^1.5.1",
     "globals": "^15.1.0",
     "husky": "^9.0.11",
     "isomorphic-fetch": "^3.0.0",
