@@ -10,6 +10,9 @@ import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { DetaildCard } from '../../components/DetaildCard/DetaildCard';
 import { getSearchCards } from '../../services/api';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+// import { peopleCardsFetch } from '../../redux/peopleCardsSlice';
 
 const MainPage = () => {
   const [searchInputValue, setSearchInputValue] = useSearchValue();
@@ -18,6 +21,12 @@ const MainPage = () => {
   const [paginationPageNum, setPaginationPageNum] = useState<number>(1);
   const [personData, setPersonData] = useState<IPeopleCards>(Object);
   const [isOpenDetailCard, setIsOpenDetailCard] = useState<boolean>(false);
+
+  const testData = useSelector(
+    (state: RootState) => state.peopleCards.cardData,
+  );
+
+  // const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -30,9 +39,12 @@ const MainPage = () => {
 
     getSearchCards(searchInputValue)
       .then(data => setCardsData(data))
+      // .then(data => dispatch(peopleCardsFetch(data)))
       .then(() => setIsLoading('false'))
       .catch(e => console.error(e));
   }
+
+  console.log(testData);
 
   function paginationButtonHandler(numPage: number) {
     setIsLoading('true');
