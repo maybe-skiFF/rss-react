@@ -1,12 +1,17 @@
 import { IPeopleCard } from 'src/interfaces';
 import styles from './Card.module.scss';
+import { useDispatch } from 'react-redux';
+import { setDetaildPersoneName } from '../../redux/detaildPersoneSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface ICardData {
   cardData: IPeopleCard;
-  getDetailedCardData: (personName: string) => void;
+  setIsOpenDetailCard: (isOpen: boolean) => void;
 }
 
-const Card = ({ cardData, getDetailedCardData }: ICardData) => {
+const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { name, birth_year, mass, height } = cardData;
 
   return (
@@ -14,7 +19,9 @@ const Card = ({ cardData, getDetailedCardData }: ICardData) => {
       data-testid={name}
       onClick={e => {
         const target = e.target as HTMLDivElement;
-        getDetailedCardData(target.id);
+        dispatch(setDetaildPersoneName(target.id));
+        setIsOpenDetailCard(true);
+        navigate(`people/detailed:${name.trim()}`);
       }}
       id={name}
       className={styles.cardWrapper}

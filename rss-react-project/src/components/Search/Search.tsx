@@ -5,17 +5,16 @@ import styles from './Search.module.scss';
 interface IProps {
   searchInputValue: string;
   setInputValue: (inputValue: string) => void;
-  searchButtonHandler: (searchInputValue: string) => void;
   paginationPageNum: number;
 }
 
 const Search = ({
   searchInputValue,
   setInputValue,
-  searchButtonHandler,
   paginationPageNum,
 }: IProps) => {
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setInputValue(e.target.value.trim());
   };
 
@@ -26,11 +25,12 @@ const Search = ({
         type="search"
         placeholder="search..."
         className={styles.searchInput}
-        onChange={handleChangeInputValue}
+        onChange={e => {
+          handleChangeInputValue(e);
+        }}
       />
       <SearchButton
         searchInputValue={searchInputValue}
-        searchButtonHandler={searchButtonHandler}
         paginationPageNum={paginationPageNum}
       />
     </div>

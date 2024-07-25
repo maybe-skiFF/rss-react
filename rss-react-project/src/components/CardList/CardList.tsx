@@ -1,50 +1,20 @@
-import { getSearchCards } from '../../services/api';
 import { Card } from '../Card/Card';
 import { IPeopleCard, IPeopleCards } from 'src/interfaces';
 import styles from './CardList.module.scss';
-import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
   cardsData: IPeopleCards;
-  setCardsData: (cards: IPeopleCards) => void;
-  getDetailedCardData: (personName: string) => void;
   isOpenDetailCard: boolean;
   setIsOpenDetailCard: (isOpen: boolean) => void;
 }
 
 const CardList = ({
   cardsData,
-  setCardsData,
-  getDetailedCardData,
   isOpenDetailCard,
   setIsOpenDetailCard,
 }: IProps) => {
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const curPage = searchParams.get('page') ?? '1';
-  const curSearchTerm = searchParams.get('search') ?? '';
-
-  useEffect(() => {
-    function getCardsFromApi() {
-      getSearchCards(curSearchTerm, Number(curPage))
-        .then(data => setCardsData(data))
-        .catch(e => console.error(e));
-    }
-
-    if (!localStorage.getItem('searchInputValue')) {
-      getCardsFromApi();
-    }
-    if (localStorage.getItem('searchInputValue') === '') {
-      getCardsFromApi();
-    }
-    if (localStorage.getItem('searchInputValue') !== '') {
-      getCardsFromApi();
-    }
-    if (cardsData.detail) {
-      navigate('*');
-    }
-  }, [setCardsData, curPage, curSearchTerm, cardsData.detail, navigate]);
 
   function closeDetailedCard() {
     if (isOpenDetailCard) {
@@ -65,7 +35,7 @@ const CardList = ({
             <Card
               cardData={cardItem}
               key={cardItem.name}
-              getDetailedCardData={getDetailedCardData}
+              setIsOpenDetailCard={setIsOpenDetailCard}
             />
           ))}
         </div>

@@ -5,13 +5,11 @@ import { ErrorButton } from '../ErrorButton/ErrorButton';
 interface IProps {
   searchInputValue: string;
   setInputValue: (inputValue: string) => void;
-  searchButtonHandler: (searchInputValue: string) => void;
   paginationPageNum: number;
 }
 const Header = ({
   searchInputValue,
   setInputValue,
-  searchButtonHandler,
   paginationPageNum,
 }: IProps) => {
   return (
@@ -19,7 +17,6 @@ const Header = ({
       <Search
         searchInputValue={searchInputValue}
         setInputValue={setInputValue}
-        searchButtonHandler={searchButtonHandler}
         paginationPageNum={paginationPageNum}
       />
       <ErrorButton />

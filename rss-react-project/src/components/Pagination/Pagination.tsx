@@ -1,20 +1,16 @@
 import { IPeopleCards } from 'src/interfaces';
 import styles from './Pagination.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { paginationPageChange } from '../../redux/paginationPageSlice';
+import { useDispatch } from 'react-redux';
 
 interface IProps {
   cardsData: IPeopleCards;
-  paginationButtonHandler: (numPage: number) => void;
   searchInputValue: string;
-  setPaginationPageNum: (numPage: number) => void;
 }
 
-const Pagination = ({
-  cardsData,
-  paginationButtonHandler,
-  searchInputValue,
-  setPaginationPageNum,
-}: IProps) => {
+const Pagination = ({ cardsData, searchInputValue }: IProps) => {
+  const dispatch = useDispatch();
   const pageCount = Math.ceil(cardsData.count / 10);
   let pageCountArr;
   const navigate = useNavigate();
@@ -33,7 +29,6 @@ const Pagination = ({
     } else {
       navigate(`people?page=${pageNum}&search=${searchInputValue}`);
     }
-    setPaginationPageNum(pageNum);
   }
 
   return (
@@ -41,8 +36,8 @@ const Pagination = ({
       {pageCountArr.map(pageNum => (
         <li
           onClick={() => {
-            paginationButtonHandler(pageNum);
             paginationUpdateURL(pageNum);
+            dispatch(paginationPageChange(pageNum));
           }}
           key={pageNum}
           className={styles.paginationItem}

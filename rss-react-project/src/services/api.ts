@@ -1,5 +1,11 @@
 import { IPeopleCards } from 'src/interfaces';
 import { BASE_URL } from '../variables/index';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+interface IQueryStringParams {
+  searchInputValue?: string;
+  paginationPageNum?: number;
+}
 
 export async function getSearchCards(
   searchValue: string | null,
@@ -17,3 +23,20 @@ export async function getSearchCards(
     throw new Error(`GET Response error: ${String(err)}`);
   }
 }
+
+export const api = createApi({
+  reducerPath: 'api',
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  endpoints: builder => ({
+    getSearchCards: builder.query<IPeopleCards, IQueryStringParams>({
+      query: args => {
+        const { searchInputValue, paginationPageNum = 1 } = args;
+        return {
+          url: `/?search=${searchInputValue}&page=${paginationPageNum}`,
+        };
+      },
+    }),
+  }),
+});
+
+export const { useGetSearchCardsQuery } = api;

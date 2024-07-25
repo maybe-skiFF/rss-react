@@ -3,15 +3,10 @@ import styles from './SearchButton.module.scss';
 
 interface IProps {
   searchInputValue: string;
-  searchButtonHandler: (searchInputValue: string) => void;
   paginationPageNum: number;
 }
 
-const SearchButton = ({
-  searchInputValue,
-  searchButtonHandler,
-  paginationPageNum,
-}: IProps) => {
+const SearchButton = ({ searchInputValue, paginationPageNum }: IProps) => {
   const navigate = useNavigate();
 
   function searchButtonUpdateURL(paginationPageNum: number) {
@@ -26,7 +21,6 @@ const SearchButton = ({
 
   const setSearchInputValueToLocalStorage = () => {
     localStorage.setItem('searchInputValue', searchInputValue);
-    searchButtonHandler(searchInputValue);
     searchButtonUpdateURL(paginationPageNum);
   };
 
