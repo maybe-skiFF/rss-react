@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import peopleCardsReducer from './peopleCardsSlice';
+import favoritePeopleReducer from './favoritePeopleSlice';
 import paginationPageReducer from './paginationPageSlice';
 import detaildPersoneReducerd from './detaildPersoneSlice';
 import searchInputValueReducer from './searchInputValueSlice';
@@ -7,7 +7,7 @@ import { api } from '../services/api';
 
 export const store = configureStore({
   reducer: {
-    peopleCards: peopleCardsReducer,
+    favoritePeople: favoritePeopleReducer,
     [api.reducerPath]: api.reducer,
     paginationPage: paginationPageReducer,
     detaildPersone: detaildPersoneReducerd,
