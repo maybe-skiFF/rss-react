@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styles from './MainPage.module.scss';
 import { Header } from '../../components/Header/Header';
-import { useSearchValue } from '../../hooks/useSearchValue';
 import { CardList } from '../../components/CardList/CardList';
 import { Loader } from '../../components/Loader/Loader';
 import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
@@ -12,11 +11,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
 const MainPage = () => {
-  const [searchInputValue, setSearchInputValue] = useSearchValue();
   const [isOpenDetailCard, setIsOpenDetailCard] = useState<boolean>(false);
 
   const paginationPageNum = useSelector(
     (state: RootState) => state.paginationPage.pageNum,
+  );
+
+  const searchInputValue = useSelector(
+    (state: RootState) => state.searchInputValue.searchValue,
   );
 
   const { data: cardsData, isFetching } = useGetSearchCardsQuery({
@@ -24,17 +26,9 @@ const MainPage = () => {
     paginationPageNum,
   });
 
-  function searchInputHandler(value: string) {
-    setSearchInputValue(value);
-  }
-
   return (
     <ErrorBoundary>
-      <Header
-        searchInputValue={searchInputValue}
-        setInputValue={searchInputHandler}
-        paginationPageNum={paginationPageNum}
-      />
+      <Header paginationPageNum={paginationPageNum} />
       {isFetching ? <Loader /> : ''}
       <div className={styles.outletWrapper}>
         {cardsData && (

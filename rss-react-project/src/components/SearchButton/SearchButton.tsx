@@ -1,27 +1,31 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './SearchButton.module.scss';
+import { useDispatch } from 'react-redux';
+import { searchInputValueChange } from '../../redux/searchInputValueSlice';
+import { paginationPageChange } from '../../redux/paginationPageSlice';
 
 interface IProps {
-  searchInputValue: string;
+  searchValue: string;
   paginationPageNum: number;
 }
 
-const SearchButton = ({ searchInputValue, paginationPageNum }: IProps) => {
+const SearchButton = ({ searchValue, paginationPageNum }: IProps) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function searchButtonUpdateURL(paginationPageNum: number) {
-    if (searchInputValue !== '') {
-      navigate(
-        `people?page=${1 || paginationPageNum}&search=${searchInputValue}`,
-      );
+    if (searchValue !== '') {
+      navigate(`people?page=${1 || paginationPageNum}&search=${searchValue}`);
     } else {
       navigate(`people?page=${1}`);
     }
   }
 
   const setSearchInputValueToLocalStorage = () => {
-    localStorage.setItem('searchInputValue', searchInputValue);
+    localStorage.setItem('searchInputValue', searchValue);
     searchButtonUpdateURL(paginationPageNum);
+    dispatch(searchInputValueChange(searchValue));
+    dispatch(paginationPageChange(1));
   };
 
   return (

@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import peopleCardsReducer from './peopleCardsSlice';
 import paginationPageReducer from './paginationPageSlice';
 import detaildPersoneReducerd from './detaildPersoneSlice';
+import searchInputValueReducer from './searchInputValueSlice';
 import { api } from '../services/api';
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     paginationPage: paginationPageReducer,
     detaildPersone: detaildPersoneReducerd,
+    searchInputValue: searchInputValueReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(api.middleware),

@@ -3,22 +3,12 @@ import styles from './Header.module.scss';
 import { ErrorButton } from '../ErrorButton/ErrorButton';
 
 interface IProps {
-  searchInputValue: string;
-  setInputValue: (inputValue: string) => void;
   paginationPageNum: number;
 }
-const Header = ({
-  searchInputValue,
-  setInputValue,
-  paginationPageNum,
-}: IProps) => {
+const Header = ({ paginationPageNum }: IProps) => {
   return (
     <div className={styles.headerWrapper}>
-      <Search
-        searchInputValue={searchInputValue}
-        setInputValue={setInputValue}
-        paginationPageNum={paginationPageNum}
-      />
+      <Search paginationPageNum={paginationPageNum} />
       <ErrorButton />
     </div>
   );
