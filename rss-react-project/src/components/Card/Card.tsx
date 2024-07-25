@@ -38,6 +38,14 @@ const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
       <p id={name} className={styles.cardDescription}>
         Has height: {height}
       </p>
+      <input
+        className={styles.test}
+        type="checkbox"
+        onClick={e => {
+          console.log('test');
+          e.stopPropagation();
+        }}
+      />
     </div>
   );
 };
