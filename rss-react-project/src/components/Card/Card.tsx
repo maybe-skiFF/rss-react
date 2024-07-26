@@ -1,6 +1,6 @@
 import { IPeopleCard } from 'src/interfaces';
 import styles from './Card.module.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setDetaildPersoneName } from '../../redux/detaildPersoneSlice';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -8,6 +8,7 @@ import {
   setFavoritePeople,
   removeFavoritePeople,
 } from '../../redux/favoritePeopleSlice';
+import { RootState } from '../../redux/store';
 
 interface ICardData {
   cardData: IPeopleCard;
@@ -17,6 +18,9 @@ interface ICardData {
 const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const favoritePeoplesInStore = useSelector(
+    (state: RootState) => state.favoritePeople.favoritePeople,
+  );
   const [checked, setChecked] = useState(false);
   const { name, birth_year, mass, height } = cardData;
   const favoritePeopleData = {
@@ -25,6 +29,12 @@ const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
     mass,
     height,
   };
+
+  favoritePeoplesInStore.forEach(item => {
+    if (item.name.includes(name) && checked === false) {
+      setChecked(true);
+    }
+  });
 
   const favoritePeopleHandler = () => {
     if (!checked) {
@@ -64,7 +74,6 @@ const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
         checked={checked}
         onChange={() => setChecked(!checked)}
         onClick={e => {
-          console.log('test');
           e.stopPropagation();
           setChecked(!checked);
           favoritePeopleHandler();
