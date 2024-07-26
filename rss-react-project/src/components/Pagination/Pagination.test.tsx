@@ -2,6 +2,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Pagination } from './Pagination';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
 
 const mockData = {
   count: 1,
@@ -10,23 +12,15 @@ const mockData = {
   results: [],
 };
 
-// const mockPaginationButtonHandler = jest.fn();
-const mockSetPaginationPageNum = jest.fn();
-const mockPaginationButtonHandler = jest.fn().mockImplementation(() => {
-  window.history.pushState({}, '', '/people?page=1');
-});
-
 describe('Pagination tests', () => {
   test('should make sure the component updates URL query parameter when page changes', () => {
     render(
-      <BrowserRouter>
-        <Pagination
-          cardsData={mockData}
-          paginationButtonHandler={mockPaginationButtonHandler}
-          searchInputValue={''}
-          setPaginationPageNum={mockSetPaginationPageNum}
-        />
-      </BrowserRouter>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <Pagination cardsData={mockData} searchInputValue={''} />
+        </BrowserRouter>
+        ,
+      </Provider>,
     );
 
     const paginationButton = screen.getByText('1');

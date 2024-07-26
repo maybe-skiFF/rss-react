@@ -2,7 +2,10 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { CardList } from './CardList';
 import { BrowserRouter } from 'react-router-dom';
-import { getSearchCards } from '../../services/api';
+// import { getSearchCards } from '../../services/api';
+import { useGetSearchCardsQuery } from '../../services/api';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
 
 jest.mock('../../services/api');
 
@@ -25,9 +28,7 @@ const mockPersoneData = {
   url: '',
 };
 
-const mockSetCardsData = jest.fn();
 const mockSetIsOpenDetailCard = jest.fn();
-const mockGetDetailedCardData = jest.fn();
 
 const mockData = {
   count: 1,
@@ -45,44 +46,46 @@ const mockDataEmpty = {
 
 describe('CardList tests', () => {
   test('should verify that the component renders the specified number of cards', async () => {
-    (getSearchCards as jest.Mock).mockResolvedValue(
+    (useGetSearchCardsQuery as jest.Mock).mockResolvedValue(
       new Promise(resolve => {
         resolve(mockData);
       }),
     );
 
     render(
-      <BrowserRouter>
-        <CardList
-          cardsData={mockData}
-          setCardsData={mockSetCardsData}
-          getDetailedCardData={mockGetDetailedCardData}
-          isOpenDetailCard
-          setIsOpenDetailCard={mockSetIsOpenDetailCard}
-        />
-      </BrowserRouter>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <CardList
+            cardsData={mockData}
+            isOpenDetailCard
+            setIsOpenDetailCard={mockSetIsOpenDetailCard}
+          />
+        </BrowserRouter>
+        ,
+      </Provider>,
     );
     const cards = await screen.findAllByText(/Was born:/);
     expect(cards).toHaveLength(mockData.count);
   });
 
   test('should display an appropriate message if no cards are present', async () => {
-    (getSearchCards as jest.Mock).mockResolvedValue(
+    (useGetSearchCardsQuery as jest.Mock).mockResolvedValue(
       new Promise(resolve => {
         resolve(mockData);
       }),
     );
 
     render(
-      <BrowserRouter>
-        <CardList
-          cardsData={mockDataEmpty}
-          setCardsData={() => mockSetCardsData}
-          getDetailedCardData={mockGetDetailedCardData}
-          isOpenDetailCard
-          setIsOpenDetailCard={mockSetIsOpenDetailCard}
-        />
-      </BrowserRouter>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <CardList
+            cardsData={mockDataEmpty}
+            isOpenDetailCard
+            setIsOpenDetailCard={mockSetIsOpenDetailCard}
+          />
+        </BrowserRouter>
+        ,
+      </Provider>,
     );
 
     expect(

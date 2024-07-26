@@ -7,22 +7,22 @@ interface IQueryStringParams {
   paginationPageNum?: number;
 }
 
-export async function getSearchCards(
-  searchValue: string | null,
-  pageNum = 1,
-): Promise<IPeopleCards> {
-  localStorage.setItem('isLoading', 'true');
-  try {
-    const resp = await fetch(
-      `${BASE_URL}/?search=${searchValue}&page=${pageNum}`,
-    );
-    localStorage.setItem('isLoading', 'false');
+// export async function getSearchCards(
+//   searchValue: string | null,
+//   pageNum = 1,
+// ): Promise<IPeopleCards> {
+//   localStorage.setItem('isLoading', 'true');
+//   try {
+//     const resp = await fetch(
+//       `${BASE_URL}/?search=${searchValue}&page=${pageNum}`,
+//     );
+//     localStorage.setItem('isLoading', 'false');
 
-    return (await resp.json()) as IPeopleCards;
-  } catch (err) {
-    throw new Error(`GET Response error: ${String(err)}`);
-  }
-}
+//     return (await resp.json()) as IPeopleCards;
+//   } catch (err) {
+//     throw new Error(`GET Response error: ${String(err)}`);
+//   }
+// }
 
 export const api = createApi({
   reducerPath: 'api',
