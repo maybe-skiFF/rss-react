@@ -1,4 +1,4 @@
-import { useGetSearchCardsQuery } from './api';
+import { getSearchCards } from './api';
 import { IPeopleCards, IPeopleCard } from '../interfaces';
 import fetchMock from 'fetch-mock';
 
@@ -36,16 +36,13 @@ describe('api tests', () => {
     fetchMock.restore();
   });
 
-  test('should return a response with status 200 and JSON data', () => {
+  test('should return a response with status 200 and JSON data', async () => {
     fetchMock.getOnce('https://swapi.dev/api/people/?search=Chewbacca&page=1', {
       status: 200,
       body: mockResponse,
     });
 
-    const result = useGetSearchCardsQuery({
-      searchInputValue,
-      paginationPageNum,
-    });
+    const result = await getSearchCards(searchInputValue, paginationPageNum);
 
     expect(result).toEqual(mockResponse);
     expect(fetchMock.calls().length).toBe(1);
