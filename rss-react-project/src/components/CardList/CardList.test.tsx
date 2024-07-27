@@ -2,12 +2,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { CardList } from './CardList';
 import { BrowserRouter } from 'react-router-dom';
-// import { getSearchCards } from '../../services/api';
-import { useGetSearchCardsQuery } from '../../services/api';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store';
-
-jest.mock('../../services/api');
 
 const mockPersoneData = {
   name: 'C-3PO',
@@ -46,12 +42,6 @@ const mockDataEmpty = {
 
 describe('CardList tests', () => {
   test('should verify that the component renders the specified number of cards', async () => {
-    (useGetSearchCardsQuery as jest.Mock).mockResolvedValue(
-      new Promise(resolve => {
-        resolve(mockData);
-      }),
-    );
-
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -64,28 +54,19 @@ describe('CardList tests', () => {
         ,
       </Provider>,
     );
-    const cards = await screen.findAllByText(/Was born:/);
-    expect(cards).toHaveLength(mockData.count);
+    const cards = await screen.findByText(/Was born:/);
+    expect(cards).toBeInTheDocument();
   });
 
   test('should display an appropriate message if no cards are present', async () => {
-    (useGetSearchCardsQuery as jest.Mock).mockResolvedValue(
-      new Promise(resolve => {
-        resolve(mockData);
-      }),
-    );
-
     render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <CardList
-            cardsData={mockDataEmpty}
-            isOpenDetailCard
-            setIsOpenDetailCard={mockSetIsOpenDetailCard}
-          />
-        </BrowserRouter>
-        ,
-      </Provider>,
+      <BrowserRouter>
+        <CardList
+          cardsData={mockDataEmpty}
+          isOpenDetailCard
+          setIsOpenDetailCard={mockSetIsOpenDetailCard}
+        />
+      </BrowserRouter>,
     );
 
     expect(

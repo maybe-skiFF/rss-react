@@ -1,9 +1,9 @@
-import { getSearchCards } from './api';
+import { useGetSearchCardsQuery } from './api';
 import { IPeopleCards, IPeopleCard } from '../interfaces';
 import fetchMock from 'fetch-mock';
 
 const mockPersoneData: IPeopleCard = {
-  name: 'C-3PO',
+  name: 'Chewbacca',
   birth_year: '112BBY',
   mass: '75',
   height: '167',
@@ -28,26 +28,31 @@ const mockResponse: IPeopleCards = {
   previous: '',
 };
 
-const searchValue = 'C-3PO';
-const pageNum = 1;
+const searchInputValue = 'Chewbacca';
+const paginationPageNum = 1;
 
 describe('api tests', () => {
   afterEach(() => {
     fetchMock.restore();
   });
 
-  test('should return a response with status 200 and JSON data', async () => {
-    fetchMock.getOnce('https://swapi.dev/api/people/?search=C-3PO&page=1', {
+  test('should return a response with status 200 and JSON data', () => {
+    fetchMock.getOnce('https://swapi.dev/api/people/?search=Chewbacca&page=1', {
       status: 200,
       body: mockResponse,
     });
 
-    const result = await getSearchCards(searchValue, pageNum);
+    const result = useGetSearchCardsQuery({
+      searchInputValue,
+      paginationPageNum,
+    });
 
     expect(result).toEqual(mockResponse);
     expect(fetchMock.calls().length).toBe(1);
 
     const lastCall = fetchMock.calls()[0];
-    expect(lastCall[0]).toContain(`?search=${searchValue}&page=${pageNum}`);
+    expect(lastCall[0]).toContain(
+      `?search=${searchInputValue}&page=${paginationPageNum}`,
+    );
   });
 });
