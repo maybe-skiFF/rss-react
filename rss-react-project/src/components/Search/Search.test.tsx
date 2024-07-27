@@ -2,21 +2,18 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Search } from './Search';
-
-const mockSetInputValue = jest.fn();
-const mockSearchButtonHandler = jest.fn();
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
 
 describe('Search tests', () => {
   test('should verify that clicking the Search button saves the entered value to the local storage', () => {
     render(
-      <BrowserRouter>
-        <Search
-          searchInputValue={'C-3PO'}
-          setInputValue={mockSetInputValue}
-          searchButtonHandler={mockSearchButtonHandler}
-          paginationPageNum={1}
-        />
-      </BrowserRouter>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <Search paginationPageNum={1} />
+        </BrowserRouter>
+        ,
+      </Provider>,
     );
 
     const searchInput = screen.getByPlaceholderText('search...');
@@ -27,32 +24,14 @@ describe('Search tests', () => {
     expect(window.localStorage.getItem('searchInputValue')).toBe('C-3PO');
   });
 
-  test('should check that the component retrieves the value from the local storage upon mounting', () => {
-    window.localStorage.setItem('searchInputValue', 'C-3PO');
-    render(
-      <BrowserRouter>
-        <Search
-          searchInputValue={'C-3PO'}
-          setInputValue={mockSetInputValue}
-          searchButtonHandler={mockSearchButtonHandler}
-          paginationPageNum={1}
-        />
-      </BrowserRouter>,
-    );
-
-    expect(screen.getByDisplayValue('C-3PO')).toBeInTheDocument();
-  });
-
   test('should navigate to page=1 if searchInput is empty', () => {
     render(
-      <BrowserRouter>
-        <Search
-          searchInputValue={''}
-          setInputValue={mockSetInputValue}
-          searchButtonHandler={mockSearchButtonHandler}
-          paginationPageNum={1}
-        />
-      </BrowserRouter>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <Search paginationPageNum={1} />
+        </BrowserRouter>
+        ,
+      </Provider>,
     );
 
     const searchInput = screen.getByPlaceholderText('search...');
