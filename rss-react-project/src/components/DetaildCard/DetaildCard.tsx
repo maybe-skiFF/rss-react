@@ -24,7 +24,7 @@ const DetaildCard = ({ cardsData, setIsOpenDetailCard }: IProps) => {
   );
 
   const { name, birth_year, mass, height, skin_color, eye_color } =
-    filteredPerson[0];
+    filteredPerson[0] || {};
 
   return (
     <div

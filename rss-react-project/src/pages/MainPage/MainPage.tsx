@@ -10,6 +10,7 @@ import { useGetSearchCardsQuery } from '../../services/api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { ThemeContext } from '../../context/ThemeContext';
+import { Flyout } from '../../components/Flyout/Flyout';
 
 const MainPage = () => {
   const [isOpenDetailCard, setIsOpenDetailCard] = useState<boolean>(false);
@@ -17,6 +18,10 @@ const MainPage = () => {
 
   const paginationPageNum = useSelector(
     (state: RootState) => state.paginationPage.pageNum,
+  );
+
+  const favoritePeopleData = useSelector(
+    (state: RootState) => state.favoritePeople.favoritePeople,
   );
 
   const searchInputValue = useSelector(
@@ -54,6 +59,7 @@ const MainPage = () => {
       {cardsData && (
         <Pagination cardsData={cardsData} searchInputValue={searchInputValue} />
       )}
+      {favoritePeopleData.length !== 0 ? <Flyout /> : ''}
     </ErrorBoundary>
   );
 };
