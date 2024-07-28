@@ -3,6 +3,8 @@ import styles from './DetaildCard.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 interface IProps {
   cardsData: IPeopleCards;
@@ -11,6 +13,7 @@ interface IProps {
 
 const DetaildCard = ({ cardsData, setIsOpenDetailCard }: IProps) => {
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
 
   const personeName = useSelector(
     (state: RootState) => state.detaildPersone.persone,
@@ -24,7 +27,9 @@ const DetaildCard = ({ cardsData, setIsOpenDetailCard }: IProps) => {
     filteredPerson[0];
 
   return (
-    <div className={styles.detailedCardWrapper}>
+    <div
+      className={`${styles.detailedCardWrapper} ${theme === 'dark' ? styles.dark : ''}`}
+    >
       <button
         onClick={() => {
           setIsOpenDetailCard(false);

@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { SearchButton } from '../SearchButton/SearchButton';
 import styles from './Search.module.scss';
+import { ThemeContext } from '../../context/ThemeContext';
 
 interface IProps {
   paginationPageNum: number;
@@ -8,6 +9,7 @@ interface IProps {
 
 const Search = ({ paginationPageNum }: IProps) => {
   const [searchValue, setSearchValue] = useState<string>('');
+  const { theme } = useContext(ThemeContext);
 
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value.trim());
@@ -19,7 +21,7 @@ const Search = ({ paginationPageNum }: IProps) => {
         value={searchValue}
         type="search"
         placeholder="search..."
-        className={styles.searchInput}
+        className={`${styles.searchInput} ${theme === 'dark' ? styles.dark : ''}`}
         onChange={e => {
           handleChangeInputValue(e);
         }}

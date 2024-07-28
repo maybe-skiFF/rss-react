@@ -24,12 +24,13 @@
 }
 
 .dark {
-  border: 1px solid #fff;
-  color: black;
+  border: 1px solid black;
+  color: white;
+  background-color: black;
 }
 
 .dark:hover {
-  background: black;
-  color: #fff;
-  border: 1px solid black;
+  background: white;
+  color: black;
+  border: 1px solid white;
 }

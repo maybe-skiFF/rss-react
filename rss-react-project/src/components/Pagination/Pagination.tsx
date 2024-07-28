@@ -3,6 +3,8 @@ import styles from './Pagination.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { paginationPageChange } from '../../redux/paginationPageSlice';
 import { useDispatch } from 'react-redux';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 interface IProps {
   cardsData: IPeopleCards;
@@ -14,6 +16,7 @@ const Pagination = ({ cardsData, searchInputValue }: IProps) => {
   const pageCount = Math.ceil(cardsData.count / 10);
   let pageCountArr;
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
 
   (function pageCountToArr(pageCount) {
     pageCountArr = [];
@@ -32,7 +35,9 @@ const Pagination = ({ cardsData, searchInputValue }: IProps) => {
   }
 
   return (
-    <ul className={styles.paginationWrapper}>
+    <ul
+      className={`${styles.paginationWrapper} ${theme === 'dark' ? styles.paginationWrapperDark : ''}`}
+    >
       {pageCountArr.map(pageNum => (
         <li
           onClick={() => {
@@ -40,7 +45,7 @@ const Pagination = ({ cardsData, searchInputValue }: IProps) => {
             dispatch(paginationPageChange(pageNum));
           }}
           key={pageNum}
-          className={styles.paginationItem}
+          className={`${styles.paginationItem} ${theme === 'dark' ? styles.dark : ''}`}
         >
           {pageNum}
         </li>

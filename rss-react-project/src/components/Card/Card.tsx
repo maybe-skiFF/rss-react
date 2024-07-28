@@ -3,12 +3,13 @@ import styles from './Card.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDetaildPersoneName } from '../../redux/detaildPersoneSlice';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   setFavoritePeople,
   removeFavoritePeople,
 } from '../../redux/favoritePeopleSlice';
 import { RootState } from '../../redux/store';
+import { ThemeContext } from '../../context/ThemeContext';
 
 interface ICardData {
   cardData: IPeopleCard;
@@ -18,6 +19,7 @@ interface ICardData {
 const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { theme } = useContext(ThemeContext);
   const favoritePeoplesInStore = useSelector(
     (state: RootState) => state.favoritePeople.favoritePeople,
   );
@@ -54,7 +56,7 @@ const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
         navigate(`people/detailed:${name.trim()}`);
       }}
       id={name}
-      className={styles.cardWrapper}
+      className={`${styles.cardWrapper} ${theme === 'dark' ? styles.dark : ''}`}
     >
       <p id={name} className={styles.cardName}>
         Character: {name}

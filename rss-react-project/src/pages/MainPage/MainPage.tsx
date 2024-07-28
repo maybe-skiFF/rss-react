@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './MainPage.module.scss';
 import { Header } from '../../components/Header/Header';
 import { CardList } from '../../components/CardList/CardList';
@@ -9,9 +9,11 @@ import { DetaildCard } from '../../components/DetaildCard/DetaildCard';
 import { useGetSearchCardsQuery } from '../../services/api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const MainPage = () => {
   const [isOpenDetailCard, setIsOpenDetailCard] = useState<boolean>(false);
+  const { theme } = useContext(ThemeContext);
 
   const paginationPageNum = useSelector(
     (state: RootState) => state.paginationPage.pageNum,
@@ -30,7 +32,9 @@ const MainPage = () => {
     <ErrorBoundary>
       <Header paginationPageNum={paginationPageNum} />
       {isFetching ? <Loader /> : ''}
-      <div className={styles.outletWrapper}>
+      <div
+        className={`${styles.outletWrapper} ${theme === 'dark' ? styles.dark : ''}`}
+      >
         {cardsData && (
           <CardList
             cardsData={cardsData}
