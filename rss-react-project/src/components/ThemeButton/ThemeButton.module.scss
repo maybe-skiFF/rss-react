@@ -1,4 +1,4 @@
-.searchButton {
+.themeButton {
   cursor: pointer;
   border-radius: 2px;
   border: 1px solid #0c0c0e;
@@ -12,11 +12,11 @@
   letter-spacing: 1px;
   outline: none;
   background: #fff;
-  width: 100px;
+  width: 130px;
   height: 50px;
 }
 
-.searchButton:hover {
+.themeButton:hover {
   background: black;
   color: #fff;
   border: 1px solid #fff;

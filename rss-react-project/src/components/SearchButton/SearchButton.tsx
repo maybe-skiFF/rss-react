@@ -3,6 +3,8 @@ import styles from './SearchButton.module.scss';
 import { useDispatch } from 'react-redux';
 import { searchInputValueChange } from '../../redux/searchInputValueSlice';
 import { paginationPageChange } from '../../redux/paginationPageSlice';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 interface IProps {
   searchValue: string;
@@ -12,6 +14,7 @@ interface IProps {
 const SearchButton = ({ searchValue, paginationPageNum }: IProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { theme } = useContext(ThemeContext);
 
   function searchButtonUpdateURL(paginationPageNum: number) {
     if (searchValue !== '') {
@@ -33,7 +36,7 @@ const SearchButton = ({ searchValue, paginationPageNum }: IProps) => {
       data-testid="searchButton"
       onClick={setSearchInputValueToLocalStorage}
       type="button"
-      className={styles.searchButton}
+      className={`${styles.searchButton} ${theme === 'dark' ? styles.dark : ''}`}
     >
       Search
     </button>
