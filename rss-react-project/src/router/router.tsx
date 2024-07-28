@@ -1,6 +1,6 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
-import { MainPage } from 'src/pages/MainPage/MainPage';
-import { Page404 } from 'src/pages/Page404/Page404';
+import { MainPage } from '../pages/MainPage/MainPage';
+import { Page404 } from '../pages/Page404/Page404';
 
 const router = createBrowserRouter([
   {

@@ -24,3 +24,10 @@ export interface IPeopleCards {
   results: IPeopleCard[];
   detail?: string;
 }
+
+export interface IFavoritePeopleCard {
+  name: string;
+  height: string;
+  mass: string;
+  birth_year: string;
+}

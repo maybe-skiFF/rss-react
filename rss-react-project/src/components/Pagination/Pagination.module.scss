@@ -2,6 +2,8 @@
   display: flex;
   column-gap: 10px;
   justify-content: center;
+
+  padding: 5px;
 }
 
 .paginationItem {
@@ -17,4 +19,14 @@
   font-size: 20px;
 
   cursor: pointer;
+}
+
+.paginationWrapperDark {
+  background-color: #23272f;
+}
+
+.dark {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
 }

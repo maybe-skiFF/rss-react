@@ -22,3 +22,15 @@
   border: 1px solid #fff;
   transition: all 0.3s;
 }
+
+.dark {
+  border: 1px solid black;
+  color: white;
+  background-color: black;
+}
+
+.dark:hover {
+  background: white;
+  color: black;
+  border: 1px solid white;
+}

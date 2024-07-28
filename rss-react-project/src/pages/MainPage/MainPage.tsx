@@ -1,91 +1,65 @@
-import { Header } from 'src/components/Header/Header';
-import { CardList } from 'src/components/CardList/CardList';
-import { getSearchCards } from 'src/services/api';
-import { IPeopleCards } from 'src/interfaces';
-import { Loader } from 'src/components/Loader/Loader';
-import { useState } from 'react';
-import { Pagination } from 'src/components/Pagination/Pagination';
-import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
+import { useContext, useState } from 'react';
 import styles from './MainPage.module.scss';
-import { DetaildCard } from 'src/components/DetaildCard/DetaildCard';
-import { useNavigate } from 'react-router-dom';
-import { useSearchValue } from 'src/hooks/useSearchValue';
+import { Header } from '../../components/Header/Header';
+import { CardList } from '../../components/CardList/CardList';
+import { Loader } from '../../components/Loader/Loader';
+import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
+import { Pagination } from '../../components/Pagination/Pagination';
+import { DetaildCard } from '../../components/DetaildCard/DetaildCard';
+import { useGetSearchCardsQuery } from '../../services/api';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { ThemeContext } from '../../context/ThemeContext';
+import { Flyout } from '../../components/Flyout/Flyout';
 
 const MainPage = () => {
-  const [searchInputValue, setSearchInputValue] = useSearchValue();
-  const [cardsData, setCardsData] = useState<IPeopleCards>(Object);
-  const [isLoading, setIsLoading] = useState<string>('false');
-  const [paginationPageNum, setPaginationPageNum] = useState<number>(1);
-  const [personData, setPersonData] = useState<IPeopleCards>(Object);
   const [isOpenDetailCard, setIsOpenDetailCard] = useState<boolean>(false);
+  const { theme } = useContext(ThemeContext);
 
-  const navigate = useNavigate();
+  const paginationPageNum = useSelector(
+    (state: RootState) => state.paginationPage.pageNum,
+  );
 
-  function searchInputHandler(value: string) {
-    setSearchInputValue(value);
-  }
+  const favoritePeopleData = useSelector(
+    (state: RootState) => state.favoritePeople.favoritePeople,
+  );
 
-  function searchButtonHandler(searchInputValue: string) {
-    setIsLoading('true');
+  const searchInputValue = useSelector(
+    (state: RootState) => state.searchInputValue.searchValue,
+  );
 
-    getSearchCards(searchInputValue)
-      .then(data => setCardsData(data))
-      .then(() => setIsLoading('false'))
-      .catch(e => console.error(e));
-  }
-
-  function paginationButtonHandler(numPage: number) {
-    setIsLoading('true');
-
-    getSearchCards(searchInputValue, numPage)
-      .then(data => setCardsData(data))
-      .then(() => setIsLoading('false'))
-      .catch(e => console.error(e));
-  }
-
-  function getDetailedCardData(personName: string) {
-    setIsLoading('true');
-    setIsOpenDetailCard(true);
-    navigate(`people/detailed:${personName.trim()}`);
-
-    getSearchCards(personName)
-      .then(data => setPersonData(data))
-      .then(() => setIsLoading('false'))
-      .catch(e => console.error(e));
-  }
+  const { data: cardsData, isFetching } = useGetSearchCardsQuery({
+    searchInputValue,
+    paginationPageNum,
+  });
 
   return (
     <ErrorBoundary>
-      <Header
-        searchInputValue={searchInputValue}
-        setInputValue={searchInputHandler}
-        searchButtonHandler={searchButtonHandler}
-        paginationPageNum={paginationPageNum}
-      />
-      {isLoading === 'true' ? <Loader /> : ''}
-      <div className={styles.outletWrapper}>
-        <CardList
-          setCardsData={setCardsData}
-          cardsData={cardsData}
-          getDetailedCardData={getDetailedCardData}
-          isOpenDetailCard={isOpenDetailCard}
-          setIsOpenDetailCard={setIsOpenDetailCard}
-        />
-        {personData.count && isOpenDetailCard ? (
+      <Header paginationPageNum={paginationPageNum} />
+      {isFetching ? <Loader /> : ''}
+      <div
+        className={`${styles.outletWrapper} ${theme === 'dark' ? styles.dark : ''}`}
+      >
+        {cardsData && (
+          <CardList
+            cardsData={cardsData}
+            isOpenDetailCard={isOpenDetailCard}
+            setIsOpenDetailCard={setIsOpenDetailCard}
+          />
+        )}
+        {isOpenDetailCard && cardsData ? (
           <DetaildCard
-            personData={personData}
+            cardsData={cardsData}
             setIsOpenDetailCard={setIsOpenDetailCard}
           />
         ) : (
           ''
         )}
       </div>
-      <Pagination
-        cardsData={cardsData}
-        paginationButtonHandler={paginationButtonHandler}
-        searchInputValue={searchInputValue}
-        setPaginationPageNum={setPaginationPageNum}
-      />
+      {cardsData && (
+        <Pagination cardsData={cardsData} searchInputValue={searchInputValue} />
+      )}
+      {favoritePeopleData.length !== 0 ? <Flyout /> : ''}
     </ErrorBoundary>
   );
 };

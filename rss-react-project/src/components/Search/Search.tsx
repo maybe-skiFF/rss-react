@@ -1,36 +1,33 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { SearchButton } from '../SearchButton/SearchButton';
 import styles from './Search.module.scss';
+import { ThemeContext } from '../../context/ThemeContext';
 
 interface IProps {
-  searchInputValue: string;
-  setInputValue: (inputValue: string) => void;
-  searchButtonHandler: (searchInputValue: string) => void;
   paginationPageNum: number;
 }
 
-const Search = ({
-  searchInputValue,
-  setInputValue,
-  searchButtonHandler,
-  paginationPageNum,
-}: IProps) => {
+const Search = ({ paginationPageNum }: IProps) => {
+  const [searchValue, setSearchValue] = useState<string>('');
+  const { theme } = useContext(ThemeContext);
+
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value.trim());
+    setSearchValue(e.target.value.trim());
   };
 
   return (
     <div className={styles.searchWrapper}>
       <input
-        value={searchInputValue}
+        value={searchValue}
         type="search"
         placeholder="search..."
-        className={styles.searchInput}
-        onChange={handleChangeInputValue}
+        className={`${styles.searchInput} ${theme === 'dark' ? styles.dark : ''}`}
+        onChange={e => {
+          handleChangeInputValue(e);
+        }}
       />
       <SearchButton
-        searchInputValue={searchInputValue}
-        searchButtonHandler={searchButtonHandler}
+        searchValue={searchValue}
         paginationPageNum={paginationPageNum}
       />
     </div>

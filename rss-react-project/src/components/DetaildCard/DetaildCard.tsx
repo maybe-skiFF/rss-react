@@ -1,19 +1,35 @@
 import { IPeopleCards } from 'src/interfaces';
 import styles from './DetaildCard.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 interface IProps {
-  personData: IPeopleCards;
+  cardsData: IPeopleCards;
   setIsOpenDetailCard: (isOpen: boolean) => void;
 }
 
-const DetaildCard = ({ personData, setIsOpenDetailCard }: IProps) => {
+const DetaildCard = ({ cardsData, setIsOpenDetailCard }: IProps) => {
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
+
+  const personeName = useSelector(
+    (state: RootState) => state.detaildPersone.persone,
+  );
+
+  const filteredPerson = cardsData?.results.filter(
+    persone => persone.name === personeName,
+  );
+
   const { name, birth_year, mass, height, skin_color, eye_color } =
-    personData.results[0];
+    filteredPerson[0] || {};
 
   return (
-    <div className={styles.detailedCardWrapper}>
+    <div
+      className={`${styles.detailedCardWrapper} ${theme === 'dark' ? styles.dark : ''}`}
+    >
       <button
         onClick={() => {
           setIsOpenDetailCard(false);
