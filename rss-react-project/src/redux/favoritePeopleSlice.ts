@@ -24,10 +24,13 @@ export const favoritePeopleSlice = createSlice({
         item => item.name !== action.payload.name,
       );
     },
+    clearFavoritePeople: (state, action: PayloadAction<[]>) => {
+      state.favoritePeople = action.payload;
+    },
   },
 });
 
-export const { setFavoritePeople, removeFavoritePeople } =
+export const { setFavoritePeople, removeFavoritePeople, clearFavoritePeople } =
   favoritePeopleSlice.actions;
 
 export default favoritePeopleSlice.reducer;
