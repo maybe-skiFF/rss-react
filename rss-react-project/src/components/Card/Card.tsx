@@ -2,7 +2,6 @@ import { IPeopleCard } from 'src/interfaces';
 import styles from './Card.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDetaildPersoneName } from '../../redux/detaildPersoneSlice';
-import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import {
   setFavoritePeople,
@@ -10,6 +9,7 @@ import {
 } from '../../redux/favoritePeopleSlice';
 import { RootState } from '../../redux/store';
 import { ThemeContext } from '../../context/ThemeContext';
+import { useRouter } from 'next/router';
 
 interface ICardData {
   cardData: IPeopleCard;
@@ -17,7 +17,7 @@ interface ICardData {
 }
 
 const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
   const favoritePeoplesInStore = useSelector(
@@ -53,7 +53,7 @@ const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
         const target = e.target as HTMLDivElement;
         dispatch(setDetaildPersoneName(target.id));
         setIsOpenDetailCard(true);
-        navigate(`people/detailed:${name.trim()}`);
+        void router.push(`people/detailed:${name.trim()}`);
       }}
       id={name}
       className={`${styles.cardWrapper} ${theme === 'dark' ? styles.dark : ''}`}
@@ -85,4 +85,4 @@ const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
   );
 };
 
-export { Card };
+export default Card;

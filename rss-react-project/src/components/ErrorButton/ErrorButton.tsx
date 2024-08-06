@@ -24,4 +24,4 @@ const ErrorButton = () => {
   );
 };
 
-export { ErrorButton };
+export default ErrorButton;

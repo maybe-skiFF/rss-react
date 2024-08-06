@@ -4,4 +4,4 @@ const Loader = () => {
   return <h1 className={styles.loader}>Loading...</h1>;
 };
 
-export { Loader };
+export default Loader;

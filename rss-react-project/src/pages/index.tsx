@@ -1,16 +1,16 @@
 import { useContext, useState } from 'react';
 import styles from './MainPage.module.scss';
-import { Header } from '../../components/Header/Header';
-import { CardList } from '../../components/CardList/CardList';
-import { Loader } from '../../components/Loader/Loader';
-import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
-import { Pagination } from '../../components/Pagination/Pagination';
-import { DetaildCard } from '../../components/DetaildCard/DetaildCard';
-import { useGetSearchCardsQuery } from '../../services/api';
+import Header from '../components/Header/Header';
+import CardList from '../components/CardList/CardList';
+import Loader from '../components/Loader/Loader';
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import Pagination from '../components/Pagination/Pagination';
+import DetaildCard from '../components/DetaildCard/DetaildCard';
+import { useGetSearchCardsQuery } from '../services/api';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { ThemeContext } from '../../context/ThemeContext';
-import { Flyout } from '../../components/Flyout/Flyout';
+import { RootState } from '../redux/store';
+import { ThemeContext } from '../context/ThemeContext';
+import Flyout from '../components/Flyout/Flyout';
 
 const MainPage = () => {
   const [isOpenDetailCard, setIsOpenDetailCard] = useState<boolean>(false);
@@ -64,4 +64,4 @@ const MainPage = () => {
   );
 };
 
-export { MainPage };
+export default MainPage;

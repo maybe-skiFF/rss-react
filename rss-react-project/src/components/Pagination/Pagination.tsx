@@ -1,10 +1,10 @@
 import { IPeopleCards } from 'src/interfaces';
 import styles from './Pagination.module.scss';
-import { useNavigate } from 'react-router-dom';
 import { paginationPageChange } from '../../redux/paginationPageSlice';
 import { useDispatch } from 'react-redux';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
+import { useRouter } from 'next/router';
 
 interface IProps {
   cardsData: IPeopleCards;
@@ -15,7 +15,7 @@ const Pagination = ({ cardsData, searchInputValue }: IProps) => {
   const dispatch = useDispatch();
   const pageCount = Math.ceil(cardsData.count / 10);
   let pageCountArr;
-  const navigate = useNavigate();
+  const router = useRouter();
   const { theme } = useContext(ThemeContext);
 
   (function pageCountToArr(pageCount) {
@@ -28,9 +28,9 @@ const Pagination = ({ cardsData, searchInputValue }: IProps) => {
 
   function paginationUpdateURL(pageNum: number) {
     if (searchInputValue === '') {
-      navigate(`people?page=${pageNum}`);
+      void router.push(`people?page=${pageNum}`);
     } else {
-      navigate(`people?page=${pageNum}&search=${searchInputValue}`);
+      void router.push(`people?page=${pageNum}&search=${searchInputValue}`);
     }
   }
 
@@ -54,4 +54,4 @@ const Pagination = ({ cardsData, searchInputValue }: IProps) => {
   );
 };
 
-export { Pagination };
+export default Pagination;

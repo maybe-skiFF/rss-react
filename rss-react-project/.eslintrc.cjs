@@ -11,7 +11,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'next.config.mjs'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh', 'react', "react-compiler"],
   parserOptions: {
@@ -20,7 +20,7 @@ module.exports = {
       jsx: true,
     },
     sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
+    project: ['./tsconfig.json'],
     tsconfigRootDir: __dirname,
   },
   settings: {

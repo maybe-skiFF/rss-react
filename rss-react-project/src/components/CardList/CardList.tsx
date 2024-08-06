@@ -1,7 +1,7 @@
-import { Card } from '../Card/Card';
+import Card from '../Card/Card';
 import { IPeopleCard, IPeopleCards } from 'src/interfaces';
 import styles from './CardList.module.scss';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 interface IProps {
   cardsData: IPeopleCards;
@@ -14,12 +14,12 @@ const CardList = ({
   isOpenDetailCard,
   setIsOpenDetailCard,
 }: IProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   function closeDetailedCard() {
     if (isOpenDetailCard) {
       setIsOpenDetailCard(false);
-      navigate('people/');
+      void router.push('people/');
     } else return;
   }
 
@@ -52,4 +52,4 @@ const CardList = ({
   return renderCards();
 };
 
-export { CardList };
+export default CardList;

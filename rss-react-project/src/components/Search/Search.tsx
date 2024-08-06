@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext, useState } from 'react';
-import { SearchButton } from '../SearchButton/SearchButton';
+import SearchButton from '../SearchButton/SearchButton';
 import styles from './Search.module.scss';
 import { ThemeContext } from '../../context/ThemeContext';
 
@@ -34,4 +34,4 @@ const Search = ({ paginationPageNum }: IProps) => {
   );
 };
 
-export { Search };
+export default Search;

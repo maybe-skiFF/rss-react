@@ -1,10 +1,10 @@
 import { IPeopleCards } from 'src/interfaces';
 import styles from './DetaildCard.module.scss';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
+import { useRouter } from 'next/router';
 
 interface IProps {
   cardsData: IPeopleCards;
@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const DetaildCard = ({ cardsData, setIsOpenDetailCard }: IProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { theme } = useContext(ThemeContext);
 
   const personeName = useSelector(
@@ -33,7 +33,7 @@ const DetaildCard = ({ cardsData, setIsOpenDetailCard }: IProps) => {
       <button
         onClick={() => {
           setIsOpenDetailCard(false);
-          navigate('people/');
+          void router.push('people/');
         }}
         type="button"
         className={styles.detailedCardCloseBtn}
@@ -55,4 +55,4 @@ const DetaildCard = ({ cardsData, setIsOpenDetailCard }: IProps) => {
   );
 };
 
-export { DetaildCard };
+export default DetaildCard;

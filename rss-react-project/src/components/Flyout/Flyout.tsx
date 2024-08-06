@@ -36,4 +36,4 @@ const Flyout = () => {
   );
 };
 
-export { Flyout };
+export default Flyout;

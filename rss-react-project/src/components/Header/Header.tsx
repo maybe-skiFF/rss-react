@@ -1,7 +1,7 @@
-import { Search } from '../Search/Search';
+import Search from '../Search/Search';
 import styles from './Header.module.scss';
-import { ErrorButton } from '../ErrorButton/ErrorButton';
-import { ThemeButton } from '../ThemeButton/ThemeButton';
+import ErrorButton from '../ErrorButton/ErrorButton';
+import ThemeButton from '../ThemeButton/ThemeButton';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 
@@ -21,4 +21,4 @@ const Header = ({ paginationPageNum }: IProps) => {
   );
 };
 
-export { Header };
+export default Header;

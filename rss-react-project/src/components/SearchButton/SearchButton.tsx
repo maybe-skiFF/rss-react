@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom';
 import styles from './SearchButton.module.scss';
 import { useDispatch } from 'react-redux';
 import { searchInputValueChange } from '../../redux/searchInputValueSlice';
 import { paginationPageChange } from '../../redux/paginationPageSlice';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
+import { useRouter } from 'next/router';
 
 interface IProps {
   searchValue: string;
@@ -12,21 +12,25 @@ interface IProps {
 }
 
 const SearchButton = ({ searchValue, paginationPageNum }: IProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
 
-  function searchButtonUpdateURL(paginationPageNum: number) {
+  const query = { ...router.query };
+  query.search = searchValue;
+  query.page = String(paginationPageNum);
+
+  function searchButtonUpdateURL() {
     if (searchValue !== '') {
-      navigate(`people?page=${1 || paginationPageNum}&search=${searchValue}`);
+      void router.push({ pathname: router.pathname, query });
     } else {
-      navigate(`people?page=${1}`);
+      void router.push({ pathname: router.pathname, query });
     }
   }
 
   const setSearchInputValueToLocalStorage = () => {
     localStorage.setItem('searchInputValue', searchValue);
-    searchButtonUpdateURL(paginationPageNum);
+    searchButtonUpdateURL();
     dispatch(searchInputValueChange(searchValue));
     dispatch(paginationPageChange(1));
   };
@@ -43,4 +47,4 @@ const SearchButton = ({ searchValue, paginationPageNum }: IProps) => {
   );
 };
 
-export { SearchButton };
+export default SearchButton;
