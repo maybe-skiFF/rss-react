@@ -32,6 +32,9 @@ const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
     height,
   };
 
+  const query = { ...router.query };
+  query.name = name.trim();
+
   favoritePeoplesInStore.forEach(item => {
     if (item.name.includes(name) && checked === false) {
       setChecked(true);
@@ -53,7 +56,7 @@ const Card = ({ cardData, setIsOpenDetailCard }: ICardData) => {
         const target = e.target as HTMLDivElement;
         dispatch(setDetaildPersoneName(target.id));
         setIsOpenDetailCard(true);
-        void router.push(`people/detailed:${name.trim()}`);
+        void router.push({ pathname: router.pathname, query });
       }}
       id={name}
       className={`${styles.cardWrapper} ${theme === 'dark' ? styles.dark : ''}`}

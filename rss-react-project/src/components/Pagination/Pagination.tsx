@@ -16,6 +16,7 @@ const Pagination = ({ cardsData, searchInputValue }: IProps) => {
   const pageCount = Math.ceil(cardsData.count / 10);
   let pageCountArr;
   const router = useRouter();
+  const query = { ...router.query };
   const { theme } = useContext(ThemeContext);
 
   (function pageCountToArr(pageCount) {
@@ -27,10 +28,12 @@ const Pagination = ({ cardsData, searchInputValue }: IProps) => {
   })(pageCount);
 
   function paginationUpdateURL(pageNum: number) {
+    query.search = searchInputValue;
+    query.page = String(pageNum);
     if (searchInputValue === '') {
-      void router.push(`people?page=${pageNum}`);
+      void router.push({ pathname: router.pathname, query });
     } else {
-      void router.push(`people?page=${pageNum}&search=${searchInputValue}`);
+      void router.push({ pathname: router.pathname, query });
     }
   }
 

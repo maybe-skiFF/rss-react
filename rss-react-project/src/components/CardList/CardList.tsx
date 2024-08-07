@@ -19,7 +19,7 @@ const CardList = ({
   function closeDetailedCard() {
     if (isOpenDetailCard) {
       setIsOpenDetailCard(false);
-      void router.push('people/');
+      void router.push({ pathname: '/' });
     } else return;
   }
 

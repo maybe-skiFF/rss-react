@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import styles from './Page404.module.scss';
 
 const Page404 = () => {
@@ -8,7 +8,7 @@ const Page404 = () => {
         The page you are looking for might be removed or is temporarily
         unavailable
       </h1>
-      <Link to="/">
+      <Link href="/">
         <button className={styles.page404Btn}>Back To MainPage</button>
       </Link>
     </div>

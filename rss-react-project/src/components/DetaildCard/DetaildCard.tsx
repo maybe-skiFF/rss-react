@@ -33,7 +33,7 @@ const DetaildCard = ({ cardsData, setIsOpenDetailCard }: IProps) => {
       <button
         onClick={() => {
           setIsOpenDetailCard(false);
-          void router.push('people/');
+          void router.push({ pathname: router.pathname });
         }}
         type="button"
         className={styles.detailedCardCloseBtn}
