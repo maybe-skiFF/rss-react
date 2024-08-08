@@ -1,6 +1,14 @@
 import { IPeopleCards } from 'src/interfaces';
 import { BASE_URL } from '../variables/index';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  CombinedState,
+  createApi,
+  EndpointDefinitions,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
+import { Action, PayloadAction } from '@reduxjs/toolkit/react';
+import { RootState } from '../redux/store';
 
 interface IQueryStringParams {
   searchInputValue?: string;
@@ -24,9 +32,19 @@ export async function getSearchCards(
   }
 }
 
+function isHydrateAction(action: Action): action is PayloadAction<RootState> {
+  return action.type === HYDRATE;
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  extractRehydrationInfo(
+    action,
+    { reducerPath },
+  ): CombinedState<EndpointDefinitions, never, 'api'> | undefined {
+    if (isHydrateAction(action)) return action.payload[reducerPath];
+  },
   endpoints: builder => ({
     getSearchCards: builder.query<IPeopleCards, IQueryStringParams>({
       query: args => {

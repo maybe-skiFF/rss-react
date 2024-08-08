@@ -6,11 +6,19 @@ import Loader from '../components/Loader/Loader';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 import Pagination from '../components/Pagination/Pagination';
 import DetaildCard from '../components/DetaildCard/DetaildCard';
-import { useGetSearchCardsQuery } from '../services/api';
+import { api, useGetSearchCardsQuery } from '../services/api';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState, wrapper } from '../redux/store';
 import { ThemeContext } from '../context/ThemeContext';
 import Flyout from '../components/Flyout/Flyout';
+import { IPeopleCards } from '../interfaces';
+import { GetServerSideProps } from 'next';
+
+interface IProps {
+  cardsData: IPeopleCards | undefined;
+  searchInputValue: string;
+  paginationPageNum: number;
+}
 
 const MainPage = () => {
   const [isOpenDetailCard, setIsOpenDetailCard] = useState<boolean>(false);
@@ -65,3 +73,26 @@ const MainPage = () => {
 };
 
 export default MainPage;
+
+export const getServerSideProps: GetServerSideProps<IProps> =
+  wrapper.getServerSideProps(store => async ctx => {
+    const { query } = ctx;
+    const searchInputValue = query.searchInputValue?.toString() ?? '';
+    const paginationPageNum = Number(query.paginationPageNum) || 1;
+
+    const { data: cardsData } = await store.dispatch(
+      api.endpoints.getSearchCards.initiate({
+        searchInputValue,
+        paginationPageNum,
+      }),
+    );
+    await Promise.all(store.dispatch(api.util.getRunningQueriesThunk()));
+
+    return {
+      props: {
+        cardsData,
+        searchInputValue,
+        paginationPageNum,
+      },
+    };
+  });

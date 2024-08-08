@@ -30,7 +30,7 @@ module.exports = {
   },
   rules: {
     'react-refresh/only-export-components': [
-      'warn',
+      'off',
       { allowConstantExport: true },
     ],
     'import/prefer-default-export': ['off'],

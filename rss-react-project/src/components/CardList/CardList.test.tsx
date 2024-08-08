@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { CardList } from './CardList';
-import { BrowserRouter } from 'react-router-dom';
+import CardList from './CardList';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store';
 
@@ -44,13 +43,11 @@ describe('CardList tests', () => {
   test('should verify that the component renders the specified number of cards', async () => {
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <CardList
-            cardsData={mockData}
-            isOpenDetailCard
-            setIsOpenDetailCard={mockSetIsOpenDetailCard}
-          />
-        </BrowserRouter>
+        <CardList
+          cardsData={mockData}
+          isOpenDetailCard
+          setIsOpenDetailCard={mockSetIsOpenDetailCard}
+        />
         ,
       </Provider>,
     );
@@ -60,13 +57,11 @@ describe('CardList tests', () => {
 
   test('should display an appropriate message if no cards are present', async () => {
     render(
-      <BrowserRouter>
-        <CardList
-          cardsData={mockDataEmpty}
-          isOpenDetailCard
-          setIsOpenDetailCard={mockSetIsOpenDetailCard}
-        />
-      </BrowserRouter>,
+      <CardList
+        cardsData={mockDataEmpty}
+        isOpenDetailCard
+        setIsOpenDetailCard={mockSetIsOpenDetailCard}
+      />,
     );
 
     expect(
