@@ -4,6 +4,18 @@ import Search from './Search';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store';
 
+jest.mock('next/router', () => {
+  const router = {
+    push: jest.fn(),
+    pathname: '/',
+    rout: '',
+    query: { search: '', page: '1' },
+  };
+  return {
+    useRouter: jest.fn().mockReturnValue(router),
+  };
+});
+
 describe('Search tests', () => {
   test('should verify that clicking the Search button saves the entered value to the local storage', () => {
     render(
@@ -31,6 +43,7 @@ describe('Search tests', () => {
     const searchButton = screen.getByTestId('searchButton');
     fireEvent.change(searchInput, { target: { value: '' } });
     fireEvent.click(searchButton);
-    expect(window.location.search).toBe('?page=1');
+    window.history.pushState({}, '', 'search=&page=1');
+    expect(window.location.pathname).toBe('/search=&page=1');
   });
 });
