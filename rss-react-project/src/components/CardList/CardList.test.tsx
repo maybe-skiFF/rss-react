@@ -39,10 +39,22 @@ const mockDataEmpty = {
   results: [],
 };
 
+jest.mock('next/router', () => {
+  const router = {
+    push: jest.fn(),
+    pathname: '/',
+    rout: '',
+    query: {},
+  };
+  return {
+    useRouter: jest.fn().mockReturnValue(router),
+  };
+});
+
 describe('CardList tests', () => {
   test('should verify that the component renders the specified number of cards', async () => {
     render(
-      <Provider store={store}>
+      <Provider store={store()}>
         <CardList
           cardsData={mockData}
           isOpenDetailCard
