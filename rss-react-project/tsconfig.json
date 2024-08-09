@@ -27,6 +27,6 @@
     "allowJs": true,
     "plugins": [{ "name": "next" }]
   },
-  "include": ["src", ".eslintrc.cjs", "jest.config.js", "./dist/types/**/*.ts", "./next-env.d.ts"],
+  "include": ["src", ".eslintrc.cjs", "jest.config.ts", "./dist/types/**/*.ts", "./next-env.d.ts"],
   "exclude": ["./node_modules"]
 }

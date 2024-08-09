@@ -1,7 +1,6 @@
-import { Card } from './Card';
+import Card from './Card';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store';
 
@@ -26,18 +25,27 @@ const mockData = {
 
 const mockSetIsOpenDetailCard = jest.fn();
 
+jest.mock('next/router', () => {
+  const router = {
+    push: jest.fn(),
+    pathname: '/',
+    rout: '',
+    query: { name: 'C-3PO' },
+  };
+  return {
+    useRouter: jest.fn().mockReturnValue(router),
+  };
+});
+
 describe('Card tests', () => {
   test('the card component renders the relevant card data', () => {
     render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Card
-            cardData={mockData}
-            setIsOpenDetailCard={mockSetIsOpenDetailCard}
-          />
-          ,
-        </BrowserRouter>
-        ,
+      <Provider store={store()}>
+        <Card
+          cardData={mockData}
+          setIsOpenDetailCard={mockSetIsOpenDetailCard}
+        />
+        , ,
       </Provider>,
     );
     expect(screen.getByText('Character: C-3PO')).toBeInTheDocument();
@@ -45,33 +53,27 @@ describe('Card tests', () => {
 
   test('validate that clicking on a card opens a detailed card component', () => {
     const getDetailedCardData = jest.fn().mockImplementation(() => {
-      window.history.pushState({}, '', '/people/detailed:C-3PO');
+      window.history.pushState({}, '', '/name=C-3PO');
     });
     render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Card cardData={mockData} setIsOpenDetailCard={getDetailedCardData} />
-          ,
-        </BrowserRouter>
+      <Provider store={store()}>
+        <Card cardData={mockData} setIsOpenDetailCard={getDetailedCardData} />,
         ,
       </Provider>,
     );
     const card = screen.getByTestId(mockData.name);
     fireEvent.click(card);
-    expect(window.location.pathname).toBe('/people/detailed:C-3PO');
+    expect(window.location.pathname).toBe('/name=C-3PO');
   });
 
   test('should be checked after click checkbox', () => {
     render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Card
-            cardData={mockData}
-            setIsOpenDetailCard={mockSetIsOpenDetailCard}
-          />
-          ,
-        </BrowserRouter>
-        ,
+      <Provider store={store()}>
+        <Card
+          cardData={mockData}
+          setIsOpenDetailCard={mockSetIsOpenDetailCard}
+        />
+        , ,
       </Provider>,
     );
     const checkbox = screen.getByRole('checkbox');
