@@ -1,0 +1,39 @@
+.page404Wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  // background-image: url('../../assets/page404-img.png');
+  background-size: cover;
+  height: 600px;
+}
+
+.page404Text {
+  font-size: 40px;
+  text-align: center;
+}
+
+.page404Btn {
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid #0c0c0e;
+  color: #0c0c0e;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1px;
+  outline: none;
+  background: #fff;
+  width: 200px;
+  height: 50px;
+}
+
+.page404Btn:hover {
+  background: black;
+  color: #fff;
+  border: 1px solid #fff;
+  transition: all 0.3s;
+}
