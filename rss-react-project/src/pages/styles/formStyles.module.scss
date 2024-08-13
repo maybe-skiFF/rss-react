@@ -1,0 +1,62 @@
+.formPageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  row-gap: 20px;
+}
+
+.formElementWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formLabel {
+  font-size: 20px;
+  font-weight: 600;
+
+  margin-bottom: 5px;
+}
+
+.formInput {
+  width: 230px;
+  height: 30px;
+  border: 1px solid #181612;
+
+  margin-left: 10px;
+
+  outline: none;
+  padding-left: 4px;
+  padding-right: 4px;
+
+  color: #000;
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+}
+
+.formErrorText {
+  height: 20px;
+  color: red;
+  text-align: center;
+
+  margin: 5px 0;
+}
+
+.formLabelCheckbox {
+  display: flex;
+  align-items: center;
+}
+
+.formCheckbox {
+  width: 20px;
+  height: 20px;
+
+  margin-left: 5px;
+  padding-top: 2px;
+}
