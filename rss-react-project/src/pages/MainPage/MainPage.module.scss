@@ -1,0 +1,14 @@
+.mainPageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin-top: 25px;
+}
+
+.linkButtonWrapper {
+  display: flex;
+  justify-content: center;
+  column-gap: 20px;
+}
