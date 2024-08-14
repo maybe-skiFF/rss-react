@@ -1,3 +1,4 @@
+import { COUNTRIES } from '../../constants/COUNTRIES';
 import styles from '../styles/formStyles.module.scss';
 
 const HookFormPage = () => {
@@ -122,9 +123,11 @@ const HookFormPage = () => {
             list="countries"
           />
           <datalist id="countries">
-            <option value="Belarus">Belarus</option>
-            <option value="USA">USA</option>
-            <option value="Ukrain">Ukrain</option>
+            {COUNTRIES.map(country => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
           </datalist>
           <p className={styles.formErrorText}>Error: TODO</p>
         </div>
