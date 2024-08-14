@@ -1,7 +1,10 @@
-import { COUNTRIES } from '../../constants/COUNTRIES';
+import { useSelector } from 'react-redux';
 import styles from '../styles/formStyles.module.scss';
+import { RootState } from '../../redux/store';
 
 const HookFormPage = () => {
+  const countries = useSelector((state: RootState) => state.formData.countries);
+
   return (
     <div className={styles.formPageContainer}>
       <h1>HookFormPage</h1>
@@ -33,7 +36,7 @@ const HookFormPage = () => {
         </div>
 
         <div className={styles.formElementWrapper}>
-          <label htmlFor="age" className={styles.formLabel}>
+          <label htmlFor="email" className={styles.formLabel}>
             Email:
           </label>
           <input
@@ -123,7 +126,7 @@ const HookFormPage = () => {
             list="countries"
           />
           <datalist id="countries">
-            {COUNTRIES.map(country => (
+            {countries.map(country => (
               <option key={country} value={country}>
                 {country}
               </option>
