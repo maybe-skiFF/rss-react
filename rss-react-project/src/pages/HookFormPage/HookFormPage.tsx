@@ -88,13 +88,44 @@ const HookFormPage = () => {
             className={`${styles.formLabel} ${styles.formLabelCheckbox}`}
           >
             Accept Terms and Conditions agreement:
-            <input
-              className={styles.formCheckbox}
-              type="checkbox"
-              name="confirm"
-              id="confirm"
-            />
           </label>
+          <input
+            className={styles.formCheckbox}
+            type="checkbox"
+            name="confirm"
+            id="confirm"
+          />
+          <p className={styles.formErrorText}>Error: TODO</p>
+        </div>
+
+        <div className={styles.formElementWrapper}>
+          <label htmlFor="picture" className={styles.formLabel}>
+            Add picture:
+          </label>
+          <input
+            className={styles.formInputFile}
+            type="file"
+            name="picture"
+            id="picture"
+          />
+          <p className={styles.formErrorText}>Error: TODO</p>
+        </div>
+
+        <div className={styles.formElementWrapper}>
+          <label htmlFor="country" className={styles.formLabel}>
+            Country:
+          </label>
+          <input
+            className={styles.formInput}
+            name="country"
+            id="country"
+            list="countries"
+          />
+          <datalist id="countries">
+            <option value="Belarus">Belarus</option>
+            <option value="USA">USA</option>
+            <option value="Ukrain">Ukrain</option>
+          </datalist>
           <p className={styles.formErrorText}>Error: TODO</p>
         </div>
       </form>
