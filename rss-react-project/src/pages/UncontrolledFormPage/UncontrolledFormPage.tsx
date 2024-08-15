@@ -1,20 +1,49 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../styles/formStyles.module.scss';
 import { RootState } from '../../redux/store';
-import { FormEvent } from 'react';
-// import { setFormData } from '../../redux/formDataSlice';
-// import { pictureToBase64 } from '../../utils/pictureToBase64';
+import { FormEvent, useState } from 'react';
+import { formValidateSchema } from '../../utils/formValidateSchema';
+import { pictureToBase64 } from '../../utils/pictureToBase64';
+import { setFormData } from '../../redux/formDataSlice';
+import * as yup from 'yup';
+import { IFormValidationErrors } from '../../interfaces/index';
+import { useNavigate } from 'react-router-dom';
 
 const UncontrolledFormPage = () => {
   const countries = useSelector((state: RootState) => state.formData.countries);
+  const [errors, setErrors] = useState<IFormValidationErrors>({});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const currentForm = event.currentTarget;
     const formData = new FormData(currentForm);
     const formValueFromData = Object.fromEntries(formData.entries());
-    console.log(formValueFromData);
+    const pictureType = formValueFromData.picture as File;
+    const pictureToString = await pictureToBase64(pictureType);
+
+    try {
+      const formValidation = await formValidateSchema.validate(
+        formValueFromData,
+        { abortEarly: false },
+      );
+
+      console.log({ ...formValidation, picture: pictureToString });
+      dispatch(setFormData({ ...formValidation, picture: pictureToString }));
+      navigate('/');
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        let errorsList: IFormValidationErrors = {};
+        for (const err of error.inner) {
+          if (err.path && !(err.path in errorsList)) {
+            errorsList = { ...errorsList, [err.path]: err.message };
+          }
+        }
+        setErrors(errorsList);
+      }
+    }
   };
 
   return (
@@ -31,7 +60,7 @@ const UncontrolledFormPage = () => {
             id="name"
             className={styles.formInput}
           />
-          <p className={styles.formErrorText}>Error: TODO</p>
+          <p className={styles.formErrorText}>{errors.name ?? ''}</p>
         </div>
 
         <div className={styles.formElementWrapper}>
@@ -44,7 +73,7 @@ const UncontrolledFormPage = () => {
             id="age"
             className={styles.formInput}
           />
-          <p className={styles.formErrorText}>Error: TODO</p>
+          <p className={styles.formErrorText}>{errors.age ?? ''}</p>
         </div>
 
         <div className={styles.formElementWrapper}>
@@ -57,7 +86,7 @@ const UncontrolledFormPage = () => {
             id="email"
             className={styles.formInput}
           />
-          <p className={styles.formErrorText}>Error: TODO</p>
+          <p className={styles.formErrorText}>{errors.email ?? ''}</p>
         </div>
 
         <div className={styles.formElementWrapper}>
@@ -70,7 +99,7 @@ const UncontrolledFormPage = () => {
             id="password"
             className={styles.formInput}
           />
-          <p className={styles.formErrorText}>Error: TODO</p>
+          <p className={styles.formErrorText}>{errors.password ?? ''}</p>
         </div>
 
         <div className={styles.formElementWrapper}>
@@ -83,7 +112,7 @@ const UncontrolledFormPage = () => {
             id="repeatPassword"
             className={styles.formInput}
           />
-          <p className={styles.formErrorText}>Error: TODO</p>
+          <p className={styles.formErrorText}>{errors.repeatPassword ?? ''}</p>
         </div>
 
         <div className={styles.formElementWrapper}>
@@ -95,7 +124,7 @@ const UncontrolledFormPage = () => {
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <p className={styles.formErrorText}>Error: TODO</p>
+          <p className={styles.formErrorText}>{errors.gender ?? ''}</p>
         </div>
 
         <div className={styles.formElementWrapper}>
@@ -112,7 +141,7 @@ const UncontrolledFormPage = () => {
             id="confirm"
             value="true"
           />
-          <p className={styles.formErrorText}>Error: TODO</p>
+          <p className={styles.formErrorText}>{errors.confirm ?? ''}</p>
         </div>
 
         <div className={styles.formElementWrapper}>
@@ -125,7 +154,7 @@ const UncontrolledFormPage = () => {
             name="picture"
             id="picture"
           />
-          <p className={styles.formErrorText}>Error: TODO</p>
+          <p className={styles.formErrorText}>{errors.picture ?? ''}</p>
         </div>
 
         <div className={styles.formElementWrapper}>
@@ -145,7 +174,7 @@ const UncontrolledFormPage = () => {
               </option>
             ))}
           </datalist>
-          <p className={styles.formErrorText}>Error: TODO</p>
+          <p className={styles.formErrorText}>{errors.country ?? ''}</p>
         </div>
 
         <button type="submit" className={styles.formButton}>

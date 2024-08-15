@@ -38,7 +38,7 @@ const formValidateSchema = yup.object({
     .test(
       'file size',
       'File size must be less than 1Mb',
-      value => value && value.size <= 1024,
+      value => value && value.size <= 1000000,
     ),
   country: yup.string().required().oneOf(COUNTRIES, 'Select country'),
 });
