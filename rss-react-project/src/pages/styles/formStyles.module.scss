@@ -7,6 +7,12 @@
   row-gap: 20px;
 }
 
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .formElementWrapper {
   display: flex;
   flex-direction: column;
@@ -63,4 +69,29 @@
 
 .formInputFile {
   margin-left: 10px;
+}
+
+.formButton {
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid #0c0c0e;
+  color: #0c0c0e;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1px;
+  outline: none;
+  background: #fff;
+  width: 100px;
+  height: 40px;
+}
+
+.formButton:hover {
+  background: black;
+  color: #fff;
+  border: 1px solid #fff;
+  transition: all 0.3s;
 }

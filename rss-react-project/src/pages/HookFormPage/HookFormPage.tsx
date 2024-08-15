@@ -8,7 +8,7 @@ const HookFormPage = () => {
   return (
     <div className={styles.formPageContainer}>
       <h1>HookFormPage</h1>
-      <form>
+      <form className={styles.formWrapper}>
         <div className={styles.formElementWrapper}>
           <label htmlFor="name" className={styles.formLabel}>
             Name:
@@ -98,6 +98,7 @@ const HookFormPage = () => {
             type="checkbox"
             name="confirm"
             id="confirm"
+            value="true"
           />
           <p className={styles.formErrorText}>Error: TODO</p>
         </div>
@@ -134,6 +135,10 @@ const HookFormPage = () => {
           </datalist>
           <p className={styles.formErrorText}>Error: TODO</p>
         </div>
+
+        <button type="submit" className={styles.formButton}>
+          Submit
+        </button>
       </form>
     </div>
   );
