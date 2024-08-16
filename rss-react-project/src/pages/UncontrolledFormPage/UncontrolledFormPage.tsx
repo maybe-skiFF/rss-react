@@ -48,7 +48,7 @@ const UncontrolledFormPage = () => {
   return (
     <div className={styles.formPageContainer}>
       <h1>HookFormPage</h1>
-      <form noValidate onSubmit={handleSubmit} className={styles.formWrapper}>
+      <form onSubmit={handleSubmit} className={styles.formWrapper}>
         <div className={styles.formElementWrapper}>
           <label htmlFor="name" className={styles.formLabel}>
             Name:
