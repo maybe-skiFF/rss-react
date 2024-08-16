@@ -6,7 +6,12 @@ const formValidateSchema = yup.object({
     .string()
     .required()
     .matches(/^[A-Z]/, 'Name must start with a capital letter'),
-  age: yup.number().required().positive(),
+  age: yup
+    .number()
+    .transform((value: number) => (Number.isNaN(value) ? null : value))
+    .required()
+    .positive()
+    .integer(),
   email: yup.string().required().email(),
   password: yup
     .string()
@@ -25,7 +30,7 @@ const formValidateSchema = yup.object({
   gender: yup.string().required().oneOf(['Male', 'Female']),
   confirm: yup
     .boolean()
-    .required()
+    .required('You need to accept Terms and Conditions')
     .oneOf([true], 'You need to accept Terms and Conditions'),
   picture: yup
     .mixed<File>()

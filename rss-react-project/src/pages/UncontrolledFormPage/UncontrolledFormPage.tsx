@@ -30,7 +30,6 @@ const UncontrolledFormPage = () => {
         { abortEarly: false },
       );
 
-      console.log({ ...formValidation, picture: pictureToString });
       dispatch(setFormData({ ...formValidation, picture: pictureToString }));
       navigate('/');
     } catch (error) {
