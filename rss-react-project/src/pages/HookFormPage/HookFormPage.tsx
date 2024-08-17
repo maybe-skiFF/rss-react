@@ -7,10 +7,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
 import { pictureToBase64 } from '../../utils/pictureToBase64';
 import { setFormData } from '../../redux/formDataSlice';
+import { useNavigate } from 'react-router-dom';
 
 const HookFormPage = () => {
   const countries = useSelector((state: RootState) => state.formData.countries);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -24,12 +26,14 @@ const HookFormPage = () => {
   const onSubmit: SubmitHandler<
     InferType<typeof formValidateSchema>
   > = async data => {
-    console.log(data);
-    const pictureType = data.picture!;
-    console.log(typeof data.picture);
-    const pictureToString = await pictureToBase64(pictureType);
+    const pictureType =
+      data.picture instanceof FileList ? data.picture[0] : data.picture;
+    const pictureToString = pictureType
+      ? await pictureToBase64(pictureType)
+      : '';
 
     dispatch(setFormData({ ...data, picture: pictureToString }));
+    navigate('/');
   };
 
   return (
