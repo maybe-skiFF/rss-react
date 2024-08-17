@@ -32,19 +32,6 @@ const formValidateSchema = yup.object({
     .boolean()
     .required('You need to accept Terms and Conditions')
     .oneOf([true], 'You need to accept Terms and Conditions'),
-  // picture: yup
-  //   .mixed<FileList>()
-  //   .test('file type', 'Allows only .png .jpeg', fileList => {
-  //     if (fileList?.length !== 1) return false;
-  //     const file = fileList[0];
-  //     const pictureTypes = ['image/jpeg', 'image/png'];
-  //     return pictureTypes.includes(file.type);
-  //   })
-  //   .test('file size', 'File size must be less than 1Mb', fileList => {
-  //     if (fileList?.length !== 1) return false;
-  //     const file = fileList[0];
-  //     return !file || file.size <= 1000000;
-  //   }),
   picture: yup
     .mixed<FileList | File>()
     .test('file type', 'Allows only .png .jpeg', value => {
