@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { LinkButton } from '../../components/LinkButton/LinkButton';
 import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
 import styles from './MainPage.module.scss';
+import { FormDataCard } from '../../components/FormDataCard/FormDataCard';
 
 const MainPage = () => {
   return (
@@ -17,6 +18,7 @@ const MainPage = () => {
           />
         </Link>
       </div>
+      <FormDataCard />
     </div>
   );
 };
